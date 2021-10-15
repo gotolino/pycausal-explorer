@@ -37,4 +37,10 @@ jobs:
           pip install -e .[dev]
           
       - name: Run tests with pytest
-        run: pytest 
+        run: pytest
+
+      - name: Run flake8
+          run: flake8 causal_learn test
+
+      - name: Run mypy
+          run: mypy causal_learn
