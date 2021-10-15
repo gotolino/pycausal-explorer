@@ -28,6 +28,8 @@ setup(
             "twine",
             "pre-commit >= 2.12",
             "pytest-cov >= 2.11",
+            "flake8 >= 3.9",
+            "mypy >= 0.910"
         ],
     },
 )
