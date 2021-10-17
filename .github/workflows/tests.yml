@@ -42,5 +42,5 @@ jobs:
       - name: Run flake8
         run: flake8 causal_learn test
 
-      - name: Run mypy
-        run: mypy causal_learn
+#      - name: Run mypy
+#        run: mypy causal_learn
