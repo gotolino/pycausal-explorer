@@ -26,7 +26,6 @@ class CausalExtraTreesRegressor(BaseEstimator):
         if type(self.knn_params) is not dict:
             raise ValueError("KNN params must be a dictionary")
 
-
     def fit(self, X, y):
         X_train, X_val, y_train, y_val = train_test_split(
             X,
