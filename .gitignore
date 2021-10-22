@@ -148,3 +148,6 @@ Thumbs.db
 
 # profiling data
 .prof
+
+# test notebooks
+playground

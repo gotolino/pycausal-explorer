@@ -37,7 +37,7 @@ class CausalExtraTreesRegressor(BaseEstimator):
         xt_params = {
             'n_estimators': randint(10, 800),
             'max_depth': randint(3, 20),
-            'max_features': randint(int(0.4 * len(self.covariates)), len(self.covariates))
+            'max_features': ['auto', 'sqrt', 'log2']
         }
         xt_model = ExtraTreesRegressor(random_state=42)
         xt_random_search = RandomizedSearchCV(
@@ -137,7 +137,7 @@ class CausalExtraTreesClassifier(BaseEstimator):
         xt_params = {
             'n_estimators': randint(10, 800),
             'max_depth': randint(3, 20),
-            'max_features': randint(int(0.4 * len(self.covariates)), len(self.covariates))
+            'max_features': ['auto', 'sqrt', 'log2']
         }
         xt_model = ExtraTreesClassifier(random_state=42)
         xt_random_search = RandomizedSearchCV(
@@ -219,10 +219,13 @@ class CausalExtraTreesClassifier(BaseEstimator):
     def predict_ate(self, X):
         leaves = self.extratrees_model.apply(X[self.covariates])
 
-        # Predict y0 for the test set
-        y_predict_0 = self.knn_control.predict_proba(X=leaves)[:, 1]
+        try:
+            # Predict y0 for the test set
+            y_predict_0 = self.knn_control.predict_proba(X=leaves)[:, 1]
 
-        # Predict y1 for the test set
-        y_predict_1 = self.knn_treated.predict_proba(X=leaves)[:, 1]
+            # Predict y1 for the test set
+            y_predict_1 = self.knn_treated.predict_proba(X=leaves)[:, 1]
+        except IndexError:
+            print('Positivity has been violated: either control or treatment group has only one y class.')
 
         return y_predict_1 - y_predict_0

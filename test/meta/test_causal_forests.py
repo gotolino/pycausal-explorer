@@ -62,30 +62,30 @@ def test_causal_extratrees_regressor_init_raise_exception():
         )
 
 
-# def test_causal_extratrees_classifier_train():
-#     x, w, y = create_synthetic_data(random_seed=42)
-#     y_class = np.where(y > 0, 1, 0)
-#     data = pd.DataFrame(columns=['x0', 't', 'y'], data=np.column_stack([x, w, y_class]))
-#
-#     causal_extratrees_classifier = CausalExtraTreesClassifier(
-#         covariates=['x0'],
-#         treatment='t'
-#     )
-#
-#     causal_extratrees_classifier.fit(X=data[['t', 'x0']], y=data['y'])
-#     _ = causal_extratrees_classifier.predict(X=data[['t', 'x0']])
-#     _ = causal_extratrees_classifier.predict_ate(X=data[['x0']])
-#
-#
-# def test_causal_extratrees_regressor_train():
-#     x, w, y = create_synthetic_data(random_seed=42)
-#     data = pd.DataFrame(columns=['x0', 't', 'y'], data=np.column_stack([x, w, y]))
-#
-#     causal_extratrees_regressor = CausalExtraTreesRegressor(
-#         covariates=['x0'],
-#         treatment='t'
-#     )
-#
-#     causal_extratrees_regressor.fit(X=data[['t', 'x0']], y=data['y'])
-#     _ = causal_extratrees_regressor.predict(X=data[['t', 'x0']])
-#     _ = causal_extratrees_regressor.predict_ate(X=data[['x0']])
+def test_causal_extratrees_classifier_train():
+    x, w, y = create_synthetic_data(random_seed=42)
+    y_class = np.where(y > np.median(y), 1, 0)
+    data = pd.DataFrame(columns=['x0', 't', 'y'], data=np.column_stack([x, w, y_class]))
+
+    causal_extratrees_classifier = CausalExtraTreesClassifier(
+        covariates=['x0'],
+        treatment='t'
+    )
+
+    causal_extratrees_classifier.fit(X=data[['t', 'x0']], y=data['y'])
+    _ = causal_extratrees_classifier.predict(X=data[['t', 'x0']])
+    _ = causal_extratrees_classifier.predict_ate(X=data[['x0']])
+
+
+def test_causal_extratrees_regressor_train():
+    x, w, y = create_synthetic_data(random_seed=42)
+    data = pd.DataFrame(columns=['x0', 't', 'y'], data=np.column_stack([x, w, y]))
+
+    causal_extratrees_regressor = CausalExtraTreesRegressor(
+        covariates=['x0'],
+        treatment='t'
+    )
+
+    causal_extratrees_regressor.fit(X=data[['t', 'x0']], y=data['y'])
+    _ = causal_extratrees_regressor.predict(X=data[['t', 'x0']])
+    _ = causal_extratrees_regressor.predict_ate(X=data[['x0']])
