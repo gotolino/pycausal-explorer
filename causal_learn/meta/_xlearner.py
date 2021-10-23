@@ -2,8 +2,10 @@ from sklearn.base import BaseEstimator, clone
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
+from causal_learn.base import BaseCausalModel
 
-class XLearner(BaseEstimator):
+
+class XLearner(BaseCausalModel):
     def __init__(
         self, learner=None, u0=None, u1=None, te_u0=None, te_u1=None, random_state=42
     ):
@@ -58,7 +60,7 @@ class XLearner(BaseEstimator):
             )
         return predictions
 
-    def predict_ate(self, X):
+    def predict_ite(self, X):
         X_scaled = self.standard_scaler.transform(X)
         g_x = self.g.predict_proba(X_scaled)[:, 1]
         result = g_x * self.te_u0.predict(X) + (1 - g_x) * self.te_u1.predict(X)

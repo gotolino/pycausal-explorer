@@ -40,4 +40,4 @@ def test_xlearner_train():
     xlearner = XLearner(learner=LinearRegression())
     xlearner.fit(x, w, y)
     _ = xlearner.predict(x, w)
-    _ = xlearner.predict_ate(x)
+    _ = xlearner.predict_ite(x)
