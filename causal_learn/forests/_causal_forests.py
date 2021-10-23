@@ -6,6 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from causal_learn.base import BaseCausalModel
 from ._constants import forest_classifier_algorithms_dict, forest_regressor_algorithms_dict, supported_forest_algorithms
 
+
 class CausalForestRegressor(BaseCausalModel):
     def __init__(self, forest_algorithm='extratrees', covariates=[], treatment='', knn_params={}):
         self._estimator_type = 'regressor'
@@ -243,4 +244,3 @@ class CausalForestClassifier(BaseCausalModel):
             print('Positivity has been violated: either control or treatment group has only one y class.')
 
         return y_predict_1 - y_predict_0
-

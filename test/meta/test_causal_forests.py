@@ -61,14 +61,32 @@ def test_causal_forest_regressor_init_custom():
 def test_causal_forest_classifier_init_raise_exception():
     with pytest.raises(ValueError):
         CausalForestClassifier(
-            forest_algorithm='linear_regression', covariates='x0', treatment=['t'], knn_params=20
+            forest_algorithm='linear_regression'
+        )
+        CausalForestClassifier(
+            covariates='x0'
+        )
+        CausalForestClassifier(
+            treatment=['t']
+        )
+        CausalForestClassifier(
+            knn_params=20
         )
 
 
 def test_causal_forest_regressor_init_raise_exception():
     with pytest.raises(ValueError):
         CausalForestRegressor(
-            forest_algorithm='linear_regression', covariates='x0', treatment=['t'], knn_params=20
+            forest_algorithm='linear_regression'
+        )
+        CausalForestRegressor(
+            covariates='x0'
+        )
+        CausalForestRegressor(
+            treatment=['t']
+        )
+        CausalForestRegressor(
+            knn_params=20
         )
 
 
