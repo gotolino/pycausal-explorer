@@ -91,9 +91,8 @@ def test_causal_forest_regressor_init_raise_exception():
 
 
 def test_causal_forest_classifier_train():
-    x, w, y = create_synthetic_data(random_seed=42)
-    y_class = np.where(y > np.median(y), 1, 0)
-    data = pd.DataFrame(columns=['x0', 't', 'y'], data=np.column_stack([x, w, y_class]))
+    x, w, y = create_synthetic_data(random_seed=42, target_type='categorical')
+    data = pd.DataFrame(columns=['x0', 't', 'y'], data=np.column_stack([x, w, y]))
 
     causal_forest_classifier = CausalForestClassifier(
         covariates=['x0'],
@@ -102,6 +101,7 @@ def test_causal_forest_classifier_train():
 
     causal_forest_classifier.fit(X=data[['t', 'x0']], y=data['y'])
     _ = causal_forest_classifier.predict(X=data[['t', 'x0']])
+    _ = causal_forest_classifier.predict_proba(X=data[['t', 'x0']])
     _ = causal_forest_classifier.predict_ite(X=data[['x0']])
 
 
