@@ -16,18 +16,16 @@ def test_xlearner_init_learner():
 
 
 def test_xlearner_init_custom_learner():
-    learner1 = LinearRegression()
-    learner2 = RandomForestRegressor(n_estimators=100)
     xlearner = XLearner(
         u0=LinearRegression(),
         u1=LinearRegression(),
         te_u0=RandomForestRegressor(n_estimators=100),
         te_u1=RandomForestRegressor(n_estimators=100),
     )
-    assert type(xlearner.u0) is type(learner1)
-    assert type(xlearner.u1) is type(learner1)
-    assert type(xlearner.te_u0) is type(learner2)
-    assert type(xlearner.te_u1) is type(learner2)
+    assert isinstance(xlearner.u0, LinearRegression)
+    assert isinstance(xlearner.u1, LinearRegression)
+    assert isinstance(xlearner.te_u0, RandomForestRegressor)
+    assert isinstance(xlearner.te_u1, RandomForestRegressor)
 
 
 def test_xlearner_init_raise_exception():
