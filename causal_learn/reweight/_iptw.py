@@ -1,22 +1,26 @@
+import numpy as np
 from sklearn.base import BaseEstimator
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
+from ._propensity_score import PropensityScore
+
 
 class IPTW(BaseEstimator):
-    def __init__(self, propensity_score_model=LogisticRegression):
-        self.propensity_score = propensity_score_model
-        self.standard_scaler = StandardScaler()
+    def __init__(self, propensity_score=PropensityScore()):
+        self.propensity_score = propensity_score
+        self._weight = None
 
     def fit(self, X, w, y):
-        pass
-
-    def _fit_propensity_score(self, X, w):
-        X_scaled = self.standard_scaler.fit_transform(X)
-        self.g = self.g.fit(X_scaled, w)
+        self.propensity_score.fit(X, w)
+        propensity_score_hat = self.propensity_score.predict_proba(X)
+        self._weight = (w - propensity_score_hat) / (
+            propensity_score_hat * (1 - propensity_score_hat)
+        )
+        self._ate = np.mean(self._weight * y)
 
     def predict(self, X, w):
         pass
 
     def predict_ate(self, X):
-        pass
+        return self._ate
