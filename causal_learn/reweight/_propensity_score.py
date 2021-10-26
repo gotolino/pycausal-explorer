@@ -17,4 +17,4 @@ class PropensityScore:
 
     def predict_proba(self, X):
         X_scaled = self.scaler.transform(X)
-        return self.model.predict_proba(X_scaled)[:, 1]
+        return self.model.predict_proba(X_scaled)

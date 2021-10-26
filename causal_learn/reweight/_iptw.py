@@ -13,7 +13,7 @@ class IPTW(BaseEstimator):
 
     def fit(self, X, w, y):
         self.propensity_score.fit(X, w)
-        propensity_score_hat = self.propensity_score.predict_proba(X)
+        propensity_score_hat = self.propensity_score.predict_proba(X)[:, 1]
         self._weight = (w - propensity_score_hat) / (
             propensity_score_hat * (1 - propensity_score_hat)
         )
