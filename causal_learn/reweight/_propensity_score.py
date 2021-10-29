@@ -20,14 +20,20 @@ class PropensityScore:
         self.scaler = scaler
 
     def fit(self, X, w):
-        X_scaled = self.scaler.fit_transform(X)
-        self.model = self.model.fit(X_scaled, w)
+        X = X.copy()
+        if self.scaler:
+            X = self.scaler.fit_transform(X)
+        self.model = self.model.fit(X, w)
         return self
 
     def predict(self, X):
-        X_scaled = self.scaler.transform(X)
-        return self.model.predict(X_scaled)
+        X = X.copy()
+        if self.scaler:
+            X = self.scaler.transform(X)
+        return self.model.predict(X)
 
     def predict_proba(self, X):
-        X_scaled = self.scaler.transform(X)
-        return self.model.predict_proba(X_scaled)
+        X = X.copy()
+        if self.scaler:
+            X = self.scaler.transform(X)
+        return self.model.predict_proba(X)
