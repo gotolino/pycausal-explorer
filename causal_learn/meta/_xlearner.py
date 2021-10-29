@@ -1,4 +1,4 @@
-from sklearn.base import BaseEstimator, clone
+from sklearn.base import clone
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
