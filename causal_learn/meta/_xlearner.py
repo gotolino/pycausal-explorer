@@ -1,14 +1,30 @@
 from sklearn.base import clone
 
 from causal_learn.base import BaseCausalModel
+
 from ..reweight import PropensityScore
 
 
 class XLearner(BaseCausalModel):
+    """
+    Implementation of the X-learner.
+
+    It consists of estimating heterogeneous treatment effect using four machine learning models.
+    Details of X-learner theory are available at Kunzel et al. (2018) (https://arxiv.org/abs/1706.03461).
+
+    Parameters
+    ----------
+    learner: base learner to use in all models. Either leaner or (u0, u1, te_u0, te_u1) must be filled
+    u0: model used to estimate outcome in the control group
+    u1: model used to estimate outcome in the treatment group
+    te_u0: model used to estimate treatment effect in the control group
+    te_u1: model used to estimate treatment effect in the treatment group group
+    random_state: random state
+    """
+
     def __init__(
         self, learner=None, u0=None, u1=None, te_u0=None, te_u1=None, random_state=42
     ):
-
         if learner is not None:
             self.u0 = clone(learner)
             self.u1 = clone(learner)
