@@ -1,11 +1,10 @@
-from sklearn.base import BaseEstimator, clone
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
+from sklearn.base import clone
 
+from causal_learn.base import BaseCausalModel
 from ..reweight import PropensityScore
 
 
-class XLearner(BaseEstimator):
+class XLearner(BaseCausalModel):
     def __init__(
         self, learner=None, u0=None, u1=None, te_u0=None, te_u1=None, random_state=42
     ):
