@@ -59,8 +59,6 @@ class CausalKNNBaseModel(BaseCausalModel):
             y_predict_0
         )
 
-        return np.column_stack((y_prob_0, y_prob_1))
-
     def predict_ite(self, X):
         X = self._scale_input_data_if_indicated(X)
 
