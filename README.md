@@ -1,4 +1,5 @@
 [![codecov](https://codecov.io/gh/gotolino/causal-learn/branch/main/graph/badge.svg?token=5W6KVR73GJ)](https://codecov.io/gh/gotolino/causal-learn)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # Template #
 
