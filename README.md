@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/gotolino/causal-learn/branch/main/graph/badge.svg?token=5W6KVR73GJ)](https://codecov.io/gh/gotolino/causal-learn)
+
 # Template #
 
 This README would normally document whatever steps are necessary to get your application up and running.
