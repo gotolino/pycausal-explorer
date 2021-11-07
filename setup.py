@@ -7,14 +7,13 @@ setup(
     name="causal_learn",
     version="0.0.1",
     url="https://github.com/gotolino/causal-learn",
-    description="Template",
+    description="Python causal inference modules",
     packages=find_packages(exclude=["test*"]),
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Operating System :: OS Independent",
     ],
     install_requires=[
@@ -31,7 +30,7 @@ setup(
             "pre-commit >= 2.12",
             "pytest-cov >= 2.11",
             "flake8 >= 3.9",
-            "mypy >= 0.910"
+            "mypy >= 0.910",
         ],
     },
 )
