@@ -70,7 +70,7 @@ class XLearner(BaseCausalModel):
             )
         return predictions
 
-    def predict_ate(self, X):
+    def predict_ite(self, X):
         g_x = self.g.predict_proba(X)[:, 1]
         result = g_x * self.te_u0.predict(X) + (1 - g_x) * self.te_u1.predict(X)
         return result

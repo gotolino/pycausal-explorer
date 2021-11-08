@@ -1,12 +1,10 @@
 import numpy as np
-from sklearn.base import BaseEstimator
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
 
+from ..base import BaseCausalModel
 from ._propensity_score import PropensityScore
 
 
-class IPTW(BaseEstimator):
+class IPTW(BaseCausalModel):
     """
     Implements Inverse Probability Treatment Weighting (IPTW) model.
 
@@ -29,8 +27,8 @@ class IPTW(BaseEstimator):
         )
         self._ate = np.mean(self.weight_ * y)
 
-    def predict(self, X, w):
-        pass
+    def predict_ite(self, X):
+        return np.full(X.shape[0], self._ate)
 
     def predict_ate(self, X):
         return self._ate
