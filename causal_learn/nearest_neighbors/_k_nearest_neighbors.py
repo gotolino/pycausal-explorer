@@ -6,7 +6,13 @@ from causal_learn.base import BaseCausalModel
 
 
 class CausalKNNBaseModel(BaseCausalModel):
-    def __init__(self, params={'n_neighbors': 10, 'metric': 'euclidean'}, covariates=[], treatment='', scale=True):
+    def __init__(
+        self,
+        params={"n_neighbors": 10, "metric": "euclidean"},
+        covariates=[],
+        treatment="",
+        scale=True,
+    ):
         if type(params) is not dict:
             raise ValueError("KNN params must be a dictionary")
         if type(covariates) is not list:
@@ -34,14 +40,14 @@ class CausalKNNBaseModel(BaseCausalModel):
 
         # Train KNN model for the control group
         self.knn_control_model.fit(
-            X=X.query(f'{self.treatment} == 0')[self.covariates],
-            y=y.loc[X.query(f'{self.treatment} == 0').index]
+            X=X.query(f"{self.treatment} == 0")[self.covariates],
+            y=y.loc[X.query(f"{self.treatment} == 0").index],
         )
 
         # Train KNN model for the treated samples
         self.knn_treated_model.fit(
-            X=X.query(f'{self.treatment} == 1')[self.covariates],
-            y=y.loc[X.query(f'{self.treatment} == 1').index]
+            X=X.query(f"{self.treatment} == 1")[self.covariates],
+            y=y.loc[X.query(f"{self.treatment} == 1").index],
         )
 
     def predict(self, X):
@@ -53,11 +59,7 @@ class CausalKNNBaseModel(BaseCausalModel):
         # Predict y1 for the test set
         y_predict_1 = self.knn_treated_model.predict(X[self.covariates])
 
-        return np.where(
-            X[self.treatment].values == 1,
-            y_predict_1,
-            y_predict_0
-        )
+        return np.where(X[self.treatment].values == 1, y_predict_1, y_predict_0)
 
     def predict_ite(self, X):
         X = self._scale_input_data_if_indicated(X)
@@ -69,7 +71,9 @@ class CausalKNNBaseModel(BaseCausalModel):
             # Predict y1 for the test set
             y_predict_1 = self.knn_treated_model.predict(X[self.covariates])
         except IndexError:
-            print('Positivity has been violated: either control or treatment group has only one y class.')
+            print(
+                "Positivity has been violated: either control or treatment group has only one y class."
+            )
 
         return y_predict_1 - y_predict_0
 
@@ -77,25 +81,17 @@ class CausalKNNBaseModel(BaseCausalModel):
 class CausalKNNRegressor(CausalKNNBaseModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._estimator_type = 'regressor'
-        self.knn_control_model = KNeighborsRegressor(
-            **self.params
-        )
-        self.knn_treated_model = KNeighborsRegressor(
-            **self.params
-        )
+        self._estimator_type = "regressor"
+        self.knn_control_model = KNeighborsRegressor(**self.params)
+        self.knn_treated_model = KNeighborsRegressor(**self.params)
 
 
 class CausalKNNClassifier(CausalKNNBaseModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._estimator_type = 'classifier'
-        self.knn_control_model = KNeighborsClassifier(
-            **self.params
-        )
-        self.knn_treated_model = KNeighborsClassifier(
-            **self.params
-        )
+        self._estimator_type = "classifier"
+        self.knn_control_model = KNeighborsClassifier(**self.params)
+        self.knn_treated_model = KNeighborsClassifier(**self.params)
 
     def predict_proba(self, X):
         self._scale_input_data_if_indicated(X)
@@ -107,15 +103,11 @@ class CausalKNNClassifier(CausalKNNBaseModel):
         y_predict_1 = self.knn_treated_model.predict_proba(X[self.covariates])
 
         y_prob_0 = np.where(
-            X[self.treatment].values == 1,
-            y_predict_1[:, 0],
-            y_predict_0[:, 0]
+            X[self.treatment].values == 1, y_predict_1[:, 0], y_predict_0[:, 0]
         )
 
         y_prob_1 = np.where(
-            X[self.treatment].values == 1,
-            y_predict_1[:, 1],
-            y_predict_0[:, 1]
+            X[self.treatment].values == 1, y_predict_1[:, 1], y_predict_0[:, 1]
         )
 
         return np.column_stack((y_prob_0, y_prob_1))
@@ -130,6 +122,8 @@ class CausalKNNClassifier(CausalKNNBaseModel):
             # Predict y1 for the test set
             y_predict_1 = self.knn_treated_model.predict_proba(X[self.covariates])[:, 1]
         except IndexError:
-            print('Positivity has been violated: either control or treatment group has only one y class.')
+            print(
+                "Positivity has been violated: either control or treatment group has only one y class."
+            )
 
         return y_predict_1 - y_predict_0
