@@ -47,10 +47,10 @@ jobs:
           verbose: true
 
       - name: Check black
-          run: black --check causal_learn test
+        run: black --check causal_learn test
 
       - name: Check isort
-          run: black --check causal_learn test
+        run: black --check causal_learn test
 
       - name: Run flake8
         run: flake8 causal_learn test
