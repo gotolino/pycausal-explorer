@@ -31,6 +31,8 @@ setup(
             "pytest-cov >= 2.11",
             "flake8 >= 3.9",
             "mypy >= 0.910",
+            "isort >= 5.9",
+            "black >= 21.10b0",
         ],
     },
 )
