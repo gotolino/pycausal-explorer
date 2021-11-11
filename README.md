@@ -15,10 +15,10 @@ You can install the package through pip:
 ## Basic Usage ##
 
 ```
-from causal_learn.datasets.synthetic import create_syntetic_dataset
-from causal_learn.meta impot XLearner
+from causal_learn.datasets.synthetic import create_synthetic_data
+from causal_learn.meta import XLearner
 
-x, treatment, y = create_synthetic_dataset()
+x, treatment, y = create_synthetic_data()
 model = XLearner()
 model.fit(x, treatment, y)
 treatment_effect = model.predict_ite(x)
