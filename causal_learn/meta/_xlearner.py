@@ -1,4 +1,5 @@
 from sklearn.base import clone
+from sklearn.ensemble import RandomForestRegressor
 
 from causal_learn.base import BaseCausalModel
 
@@ -23,7 +24,13 @@ class XLearner(BaseCausalModel):
     """
 
     def __init__(
-        self, learner=None, u0=None, u1=None, te_u0=None, te_u1=None, random_state=42
+        self,
+        learner=RandomForestRegressor(),
+        u0=None,
+        u1=None,
+        te_u0=None,
+        te_u1=None,
+        random_state=42,
     ):
         if learner is not None:
             self.u0 = clone(learner)
