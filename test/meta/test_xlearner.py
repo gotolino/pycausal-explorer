@@ -17,6 +17,7 @@ def test_xlearner_init_learner():
 
 def test_xlearner_init_custom_learner():
     xlearner = XLearner(
+        learner=None,
         u0=LinearRegression(),
         u1=LinearRegression(),
         te_u0=RandomForestRegressor(n_estimators=100),

@@ -32,12 +32,16 @@ class XLearner(BaseCausalModel):
         te_u1=None,
         random_state=42,
     ):
-        if learner is not None:
+        if learner is not None and all(
+            [model is None for model in [u0, u1, te_u0, te_u1]]
+        ):
             self.u0 = clone(learner)
             self.u1 = clone(learner)
             self.te_u0 = clone(learner)
             self.te_u1 = clone(learner)
-        elif all([model is not None for model in [u0, u1, te_u0, te_u1]]):
+        elif learner is None and all(
+            [model is not None for model in [u0, u1, te_u0, te_u1]]
+        ):
             self.u0 = clone(u0)
             self.u1 = clone(u1)
             self.te_u0 = clone(te_u0)
