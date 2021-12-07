@@ -25,7 +25,6 @@ setup(
         "dev": [
             "pytest >= 3.7",
             "check-manifest",
-            "pandas",
             "twine",
             "xgboost",
             "pre-commit >= 2.12",
