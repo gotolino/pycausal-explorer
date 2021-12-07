@@ -31,7 +31,22 @@ class BaseCausalModel(BaseEstimator, ABC):
         Parameters
         ----------
         X: array-like feature matrix
+
+        Returns
+        -------
+        treatment_effect : ndarray of results
         """
 
     def predict_ate(self, X):
+        """
+        Predict the average treatment effect for the model.
+
+        Parameters
+        ----------
+        X: array-like feature matrix
+
+        Returns
+        -------
+        treatment_effect : float result
+        """
         return np.mean(self.predict_ite(X))

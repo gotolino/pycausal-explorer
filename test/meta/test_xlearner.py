@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 import pytest
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
@@ -36,7 +38,8 @@ def test_xlearner_init_raise_exception():
 
 def test_xlearner_train():
     x, w, y = create_synthetic_data(random_seed=42)
+    X_treatment = pd.DataFrame(np.column_stack([x, w]), columns=["x1", "treatment"])
     xlearner = XLearner(learner=LinearRegression())
-    xlearner.fit(x, w, y)
+    xlearner.fit(X_treatment, y)
     _ = xlearner.predict(x, w)
     _ = xlearner.predict_ite(x)

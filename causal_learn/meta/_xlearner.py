@@ -52,7 +52,9 @@ class XLearner(BaseCausalModel):
         self.g = PropensityScore()
         self.random_state = random_state
 
-    def fit(self, X, w, y):
+    def fit(self, X_treatment, y, treatment_column="treatment"):
+        w = X_treatment[treatment_column]
+        X = X_treatment.drop(treatment_column, axis=1)
         self.g.fit(X, w)
 
         X_treat = X[w == 1].copy()
