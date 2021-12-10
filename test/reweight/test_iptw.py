@@ -13,9 +13,8 @@ def test_iptw_init():
 
 def test_propensity_score_fit():
     x, w, y = create_synthetic_data(random_seed=42)
-    X_treatment = pd.DataFrame(np.column_stack([x, w]), columns=["x1", "treatment"])
     iptw = IPTW()
-    iptw.fit(X_treatment, y)
+    iptw.fit(x, y, treatment=w)
     model_ite = iptw.predict_ite(x)
     model_ate = iptw.predict_ate(x)
     np.testing.assert_array_almost_equal(model_ite, np.ones(1000), decimal=2)
