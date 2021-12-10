@@ -19,7 +19,9 @@ class IPTW(BaseCausalModel):
         self.propensity_score = propensity_score
         self.weight_ = None
 
-    def fit(self, X, w, y):
+    def fit(self, X_treatment, y, treatment_column="treatment"):
+        w = X_treatment[treatment_column]
+        X = X_treatment.drop(treatment_column, axis=1)
         self.propensity_score.fit(X, w)
         propensity_score_hat = self.propensity_score.predict_proba(X)[:, 1]
         self.weight_ = (w - propensity_score_hat) / (
