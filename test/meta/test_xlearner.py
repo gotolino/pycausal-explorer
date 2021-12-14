@@ -38,8 +38,7 @@ def test_xlearner_init_raise_exception():
 
 def test_xlearner_train():
     x, w, y = create_synthetic_data(random_seed=42)
-    X_treatment = pd.DataFrame(np.column_stack([x, w]), columns=["x1", "treatment"])
     xlearner = XLearner(learner=LinearRegression())
-    xlearner.fit(X_treatment, y)
+    xlearner.fit(x, y, treatment=w)
     _ = xlearner.predict(x, w)
     _ = xlearner.predict_ite(x)
