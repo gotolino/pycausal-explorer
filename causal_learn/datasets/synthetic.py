@@ -2,6 +2,18 @@ import numpy as np
 
 
 def create_synthetic_data(size=1000, target_type="continuous", random_seed=None):
+    """
+    Create synthetic data.
+    Parameters
+    ----------
+    size
+    target_type
+    random_seed
+
+    Returns
+    -------
+
+    """
     if random_seed:
         np.random.seed(random_seed)
     treatment_effect = 1
