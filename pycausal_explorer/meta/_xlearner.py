@@ -2,7 +2,7 @@ from sklearn.base import clone
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.utils.validation import check_is_fitted, check_X_y
 
-from causal_learn.base import BaseCausalModel
+from pycausal_explorer.base import BaseCausalModel
 
 from ..reweight import PropensityScore
 

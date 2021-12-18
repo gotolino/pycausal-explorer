@@ -37,7 +37,7 @@ jobs:
           pip install -e .[dev]
           
       - name: Run tests with pytest
-        run: pytest --cov=./causal_learn --cov-report=xml
+        run: pytest --cov=./pycausal_explorer --cov-report=xml
         
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
@@ -47,13 +47,13 @@ jobs:
           verbose: true
 
       - name: Check black
-        run: black --check causal_learn test
+        run: black --check pycausal_explorer test
 
       - name: Check isort
-        run: black --check causal_learn test
+        run: black --check pycausal_explorer test
 
       - name: Run flake8
-        run: flake8 causal_learn test
+        run: flake8 pycausal_explorer test
 
 #      - name: Run mypy
-#        run: mypy causal_learn
+#        run: mypy pycausal_explorer

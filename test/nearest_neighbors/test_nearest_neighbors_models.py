@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from causal_learn.datasets.synthetic import create_synthetic_data
-from causal_learn.nearest_neighbors import CausalKNNClassifier, CausalKNNRegressor
+from pycausal_explorer.datasets.synthetic import create_synthetic_data
+from pycausal_explorer.nearest_neighbors import CausalKNNClassifier, CausalKNNRegressor
 
 
 def test_causal_knn_classifier_init():

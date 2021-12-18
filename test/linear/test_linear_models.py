@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from causal_learn.datasets.synthetic import create_synthetic_data
-from causal_learn.linear import CausalLinearRegression, CausalLogisticRegression
+from pycausal_explorer.datasets.synthetic import create_synthetic_data
+from pycausal_explorer.linear import CausalLinearRegression, CausalLogisticRegression
 
 
 def test_causal_logistic_regression_init():

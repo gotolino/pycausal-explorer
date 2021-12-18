@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.preprocessing import StandardScaler
 
-from causal_learn.base import BaseCausalModel
+from pycausal_explorer.base import BaseCausalModel
 
 
 class CausalKNNBaseModel(BaseCausalModel):

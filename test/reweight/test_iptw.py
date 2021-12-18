@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from causal_learn.datasets.synthetic import create_synthetic_data
-from causal_learn.reweight import IPTW, PropensityScore
+from pycausal_explorer.datasets.synthetic import create_synthetic_data
+from pycausal_explorer.reweight import IPTW, PropensityScore
 
 
 def test_iptw_init():

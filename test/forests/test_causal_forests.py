@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from causal_learn.datasets.synthetic import create_synthetic_data
-from causal_learn.forests import CausalForestClassifier, CausalForestRegressor
+from pycausal_explorer.datasets.synthetic import create_synthetic_data
+from pycausal_explorer.forests import CausalForestClassifier, CausalForestRegressor
 
 
 def test_causal_forest_classifier_init():

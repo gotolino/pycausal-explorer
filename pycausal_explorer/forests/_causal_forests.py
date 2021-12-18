@@ -3,7 +3,7 @@ from scipy.stats import randint
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 
-from causal_learn.base import BaseCausalModel
+from pycausal_explorer.base import BaseCausalModel
 
 from ._constants import (
     forest_classifier_algorithms_dict,

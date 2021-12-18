@@ -4,8 +4,8 @@ import pytest
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 
-from causal_learn.datasets.synthetic import create_synthetic_data
-from causal_learn.meta import XLearner
+from pycausal_explorer.datasets.synthetic import create_synthetic_data
+from pycausal_explorer.meta import XLearner
 
 
 def test_xlearner_init_learner():
