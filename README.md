@@ -13,7 +13,9 @@ You can install the package through pip:
 ``pip install pycausal_explorer``
 
 ## Basic Usage ##
-
+All models are inherited from BaseCausalModel, that inherits from scikit-learn BaseEstimator. 
+It uses scikit-learn framework to fit and predict the outcome. It implements predict_ite and predict_ate
+methods that return the individual treatment effect and the average treatment effect, respectively.
 ```
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
 from pycausal_explorer.meta import XLearner
