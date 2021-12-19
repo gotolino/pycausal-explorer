@@ -13,7 +13,7 @@ from ._constants import (
 )
 
 
-class CausalForestRegressor(BaseCausalModel):
+class BaseCausalForest(BaseCausalModel):
     def __init__(
         self,
         forest_algorithm="extratrees",
@@ -21,7 +21,6 @@ class CausalForestRegressor(BaseCausalModel):
         random_search_params=None,
         model_search_params=None,
     ):
-        self._estimator_type = "regressor"
 
         if (
             type(forest_algorithm) is not str
@@ -66,6 +65,23 @@ class CausalForestRegressor(BaseCausalModel):
                 "max_depth": randint(3, 20),
                 "max_features": ["auto", "sqrt", "log2"],
             }
+
+
+class CausalForestRegressor(BaseCausalForest):
+    def __init__(
+        self,
+        forest_algorithm="extratrees",
+        knn_params=None,
+        random_search_params=None,
+        model_search_params=None,
+    ):
+        super().__init__(
+            forest_algorithm=forest_algorithm,
+            knn_params=knn_params,
+            random_search_params=random_search_params,
+            model_search_params=model_search_params,
+        )
+        self._estimator_type = "regressor"
 
     def fit(self, X, y, *, treatment):
         X, y = check_X_y(X, y)
@@ -132,52 +148,21 @@ class CausalForestRegressor(BaseCausalModel):
         return y_predict_1 - y_predict_0
 
 
-class CausalForestClassifier(BaseCausalModel):
+class CausalForestClassifier(BaseCausalForest):
     def __init__(
         self,
         forest_algorithm="extratrees",
-        knn_params={},
-        random_search_params={},
+        knn_params=None,
+        random_search_params=None,
         model_search_params=None,
     ):
+        super().__init__(
+            forest_algorithm=forest_algorithm,
+            knn_params=knn_params,
+            random_search_params=random_search_params,
+            model_search_params=model_search_params,
+        )
         self._estimator_type = "classifier"
-
-        if (
-            type(forest_algorithm) is not str
-            or forest_algorithm not in supported_forest_algorithms
-        ):
-            raise ValueError(
-                "Algorithm name must be a string among the options: 'extratrees', 'random_forest', 'xgboost'"
-            )
-        if type(knn_params) is not dict:
-            raise ValueError("KNN params must be a dictionary")
-
-        self.forest_algorithm = forest_algorithm
-
-        self.knn_params = knn_params
-        if not knn_params:
-            self.knn_params = {
-                "n_neighbors": 10,
-                "metric": "hamming",
-            }
-
-        self.random_search_params = random_search_params
-        if not random_search_params:
-            self.random_search_params = {
-                "n_iter": 65,
-                "cv": 3,
-                "scoring": "neg_mean_absolute_percentage_error",
-                "n_jobs": 10,
-                "random_state": 1,
-            }
-
-        self.model_search_params = model_search_params
-        if not model_search_params:
-            self.model_search_params = {
-                "n_estimators": randint(10, 500),
-                "max_depth": randint(3, 20),
-                "max_features": ["auto", "sqrt", "log2"],
-            }
 
     def fit(self, X, y, *, treatment):
         X, y = check_X_y(X, y)
@@ -216,6 +201,8 @@ class CausalForestClassifier(BaseCausalModel):
             X=leaves_val[w_val == 1, :],
             y=y_val[w_val == 1],
         )
+        self.is_fitted_ = True
+        return self
 
     def predict(self, X, w):
         check_is_fitted(self)
