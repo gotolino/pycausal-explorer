@@ -10,7 +10,7 @@ algorithms that supports causal analysis.
 
 You can install the package through pip:
 
-``pip install pycausal_explorer``
+``pip install pycausal-explorer``
 
 ## Basic Usage ##
 All models are inherited from BaseCausalModel, that inherits from scikit-learn BaseEstimator. 
