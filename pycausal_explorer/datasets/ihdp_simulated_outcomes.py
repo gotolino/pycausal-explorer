@@ -47,6 +47,8 @@ import pandas as pd
 
 from ._filenames import DATASETS_PATH, IHDP_SIMULATED_OUTCOMES_CSV_FILE, ROOT_DIR
 
-def load_ihdp_simulated_outcomes_dataset():
-    return pd.read_csv(path.join(ROOT_DIR, DATASETS_PATH, IHDP_SIMULATED_OUTCOMES_CSV_FILE))
 
+def load_ihdp_simulated_outcomes_dataset():
+    return pd.read_csv(
+        path.join(ROOT_DIR, DATASETS_PATH, IHDP_SIMULATED_OUTCOMES_CSV_FILE)
+    )

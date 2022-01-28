@@ -28,6 +28,6 @@ import pandas as pd
 
 from ._filenames import DATASETS_PATH, LALONDE_NSW_JOBS_CSV_FILE, ROOT_DIR
 
+
 def load_lalonde_nsw_jobs_dataset():
     return pd.read_csv(path.join(ROOT_DIR, DATASETS_PATH, LALONDE_NSW_JOBS_CSV_FILE))
-
