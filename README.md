@@ -26,6 +26,9 @@ model.fit(x, treatment, y)
 treatment_effect = model.predict_ite(x)
 ```
 
+## Current Implemented Models ##
+This version currently implements propensity score and iptw in the reweight package, linear regression in the linear package, causal forests in forest package and x-learn in meta package. 
+
 ## Using Pipelines ##
 
 Pycausal-explorer has a Pipeline class inherited from scikit-learn Pipeline. 
