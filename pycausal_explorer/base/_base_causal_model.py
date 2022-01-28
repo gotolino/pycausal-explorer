@@ -12,13 +12,14 @@ class BaseCausalModel(BaseEstimator, ABC):
     """
 
     @abstractmethod
-    def fit(self, X, y):
+    def fit(self, X, y, *, treatment):
         """
         Fit the model with variables X and target y.
         Parameters
         ----------
         X: array-like feature matrix
         y: array-like target
+        treatment: array-like treatment column
         """
 
     @abstractmethod

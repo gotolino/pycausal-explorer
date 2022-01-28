@@ -1,8 +1,8 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
-from causal_learn.datasets.synthetic import create_synthetic_data
-from causal_learn.reweight import PropensityScore
+from pycausal_explorer.datasets.synthetic import create_synthetic_data
+from pycausal_explorer.reweight import PropensityScore
 
 
 def test_propensity_score_init():

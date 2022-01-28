@@ -1,6 +1,6 @@
 import pytest
 
-from causal_learn.datasets.synthetic import create_synthetic_data
+from pycausal_explorer.datasets.synthetic import create_synthetic_data
 
 
 def test_synthetic_creation():

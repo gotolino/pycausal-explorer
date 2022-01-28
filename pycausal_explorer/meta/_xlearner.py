@@ -1,7 +1,8 @@
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.utils.validation import check_is_fitted, check_X_y
 
-from causal_learn.base import BaseCausalModel
+from pycausal_explorer.base import BaseCausalModel
 
 from ..reweight import PropensityScore
 
@@ -32,6 +33,7 @@ class XLearner(BaseCausalModel):
         te_u1=None,
         random_state=42,
     ):
+        self.learner = learner
         if learner is not None and all(
             [model is None for model in [u0, u1, te_u0, te_u1]]
         ):
@@ -49,12 +51,13 @@ class XLearner(BaseCausalModel):
         else:
             raise ValueError("Either learner or (u0, u1, te_u0, te_u1) must be passed")
 
+        self._estimator_type = self.u0._estimator_type
         self.g = PropensityScore()
         self.random_state = random_state
 
-    def fit(self, X_treatment, y, treatment_column="treatment"):
-        w = X_treatment[treatment_column]
-        X = X_treatment.drop(treatment_column, axis=1)
+    def fit(self, X, y, *, treatment):
+        X, y = check_X_y(X, y)
+        X, w = check_X_y(X, treatment)
         self.g.fit(X, w)
 
         X_treat = X[w == 1].copy()
@@ -74,8 +77,12 @@ class XLearner(BaseCausalModel):
         self.te_u0 = self.te_u0.fit(X_control, te_imp_control)
         self.te_u1 = self.te_u1.fit(X_treat, te_imp_treat)
 
+        self.is_fitted_ = True
+        return self
+
     # TODO: do it in a better way
     def predict(self, X, w):
+        check_is_fitted(self)
         predictions = []
         for i in range(len(w)):
             predictions.append(
@@ -84,6 +91,7 @@ class XLearner(BaseCausalModel):
         return predictions
 
     def predict_ite(self, X):
+        check_is_fitted(self)
         g_x = self.g.predict_proba(X)[:, 1]
         result = g_x * self.te_u0.predict(X) + (1 - g_x) * self.te_u1.predict(X)
         return result

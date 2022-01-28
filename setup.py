@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="causal_learn",
+    name="pycausal-explorer",
     version="0.0.1",
     url="https://github.com/gotolino/causal-learn",
     description="Python causal inference modules",

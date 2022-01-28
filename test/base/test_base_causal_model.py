@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from causal_learn.base import BaseCausalModel
+from pycausal_explorer.base import BaseCausalModel
 
 
 class ModelWithoutFit(BaseCausalModel):
