@@ -8,7 +8,7 @@ from pycausal_explorer.base import BaseCausalModel
 
 class CausalLinearRegression(BaseCausalModel):
     """
-    Linear Regressor model.
+    Causal Linear Regressor model.
 
     Estimates causal effect using a Linear Regressor.
     """
@@ -17,7 +17,7 @@ class CausalLinearRegression(BaseCausalModel):
         self.standard_scaler = StandardScaler()
 
     def fit(self, X, y, *, treatment):
-        """Fit a Generalized Linear Model.
+        """Fit Causal Linear Regressor model.
 
         Parameters
         ----------
