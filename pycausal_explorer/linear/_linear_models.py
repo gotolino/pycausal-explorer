@@ -7,11 +7,34 @@ from pycausal_explorer.base import BaseCausalModel
 
 
 class CausalLinearRegression(BaseCausalModel):
+    """
+    Linear Regressor model.
+
+    Estimates causal effect using a Linear Regressor.
+    """
     def __init__(self):
         self._estimator_type = "regressor"
         self.standard_scaler = StandardScaler()
 
     def fit(self, X, y, *, treatment):
+        """Fit a Generalized Linear Model.
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            Features to control for when estimating causal effect.
+
+        y : array-like of shape (n_samples,)
+            Outcome of samples.
+
+        treatment : array-like of shape (n_samples,)
+            Binary. Wether or not treatment was applied on a given sample.
+
+        Returns
+        -------
+        self : object
+            Fitted model.
+        """
         X, y = check_X_y(X, y)
         X, w = check_X_y(X, treatment)
         X_std = self.standard_scaler.fit_transform(X)
