@@ -3,16 +3,24 @@ import numpy as np
 
 def create_synthetic_data(size=1000, target_type="continuous", random_seed=None):
     """
-    Create synthetic data.
+    Creates a synthetic dataset with explicit causal effects.
+
+
     Parameters
     ----------
-    size
-    target_type
-    random_seed
+    size : int
+        Amount of rows of created data.
+    target_type : basestring
+        "continuous" or "categorical".
+        Wether the outcome should be continuous or binary.
+    random_seed : int, optional
+        Random seed for data generation
 
     Returns
     -------
-
+    out : ndarray
+        Returns a 3 element tuple containing a common cause covariate,
+        the treatment and the outcome.
     """
     if random_seed:
         np.random.seed(random_seed)
