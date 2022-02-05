@@ -5,23 +5,33 @@ from sklearn.base import BaseEstimator
 
 
 class BaseCausalModel(BaseEstimator, ABC):
-    """ "Base class for causal model.
+    """ Base class for causal model.
 
     All models should inherit from this base class.
-    It should at least implement a fit and predict_ite methods.
+    All models should at least implement a fit and predict_ite methods.
     """
 
     @abstractmethod
     def fit(self, X, y, *, treatment):
         """
-        Fit the model with variables X and target y.
+        Fit model with variables X and target y.
+
         Parameters
         ----------
-        X: array-like feature matrix
-        y: array-like target
-        treatment: array-like treatment column
-        """
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            Features to control for when estimating causal effect.
 
+        y : array-like of shape (n_samples,)
+            Outcome of samples.
+
+        treatment : array-like of shape (n_samples,)
+            Binary array. Describes wether or not treatment was applied on a given sample.
+
+        Returns
+        -------
+        self : object
+            Fitted model.
+        """
     @abstractmethod
     def predict_ite(self, X):
         """
@@ -31,7 +41,8 @@ class BaseCausalModel(BaseEstimator, ABC):
         return the average treatment effect with the same shape of X.shape[0].
         Parameters
         ----------
-        X: array-like feature matrix
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            Features of each sample
 
         Returns
         -------
@@ -44,7 +55,8 @@ class BaseCausalModel(BaseEstimator, ABC):
 
         Parameters
         ----------
-        X: array-like feature matrix
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            Features of each sample
 
         Returns
         -------
