@@ -17,24 +17,6 @@ class CausalLinearRegression(BaseCausalModel):
         self.standard_scaler = StandardScaler()
 
     def fit(self, X, y, *, treatment):
-        """Fit Causal Linear Regressor model.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix} of shape (n_samples, n_features)
-            Features to control for when estimating causal effect.
-
-        y : array-like of shape (n_samples,)
-            Outcome of samples.
-
-        treatment : array-like of shape (n_samples,)
-            Binary. Wether or not treatment was applied on a given sample.
-
-        Returns
-        -------
-        self : object
-            Fitted model.
-        """
         X, y = check_X_y(X, y)
         X, w = check_X_y(X, treatment)
         X_std = self.standard_scaler.fit_transform(X)
@@ -64,6 +46,11 @@ class CausalLinearRegression(BaseCausalModel):
 
 
 class CausalLogisticRegression(BaseCausalModel):
+    """
+    Causal Logistic Regressor model.
+
+    Estimates causal effect using a Logistic Regressor.
+    """
     def __init__(self):
         self._estimator_type = "classifier"
         self.standard_scaler = StandardScaler()
