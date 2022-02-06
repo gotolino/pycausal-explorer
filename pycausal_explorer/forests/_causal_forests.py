@@ -106,7 +106,6 @@ class CausalForestRegressor(BaseCausalForest):
             model_search_params=model_search_params,
         )
         self._estimator_type = "regressor"
-        __doc__ = BaseCausalForest.__doc__
 
     def fit(self, X, y, *, treatment):
         X, y = check_X_y(X, y)
