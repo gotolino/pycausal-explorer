@@ -12,6 +12,7 @@ class CausalLinearRegression(BaseCausalModel):
 
     Estimates causal effect using a Linear Regressor.
     """
+
     def __init__(self):
         self._estimator_type = "regressor"
         self.standard_scaler = StandardScaler()
@@ -51,6 +52,7 @@ class CausalLogisticRegression(BaseCausalModel):
 
     Estimates causal effect using a Logistic Regressor.
     """
+
     def __init__(self):
         self._estimator_type = "classifier"
         self.standard_scaler = StandardScaler()

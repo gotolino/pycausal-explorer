@@ -5,7 +5,7 @@ from sklearn.base import BaseEstimator
 
 
 class BaseCausalModel(BaseEstimator, ABC):
-    """ Base class for causal model.
+    """Base class for causal model.
 
     All models should inherit from this base class.
     All models should at least implement a fit and predict_ite methods.
@@ -32,6 +32,7 @@ class BaseCausalModel(BaseEstimator, ABC):
         self : object
             Fitted model.
         """
+
     @abstractmethod
     def predict_ite(self, X):
         """

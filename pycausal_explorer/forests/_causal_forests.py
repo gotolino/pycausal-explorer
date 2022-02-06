@@ -91,6 +91,7 @@ class CausalForestRegressor(BaseCausalForest):
         Model Search Parameters to be uses by RandomizedSearchCV from sklearn.model_selection
         https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
     """
+
     def __init__(
         self,
         forest_algorithm="extratrees",
@@ -196,6 +197,7 @@ class CausalForestClassifier(BaseCausalForest):
         Model Search Parameters to be uses by RandomizedSearchCV from sklearn.model_selection
         https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
     """
+
     def __init__(
         self,
         forest_algorithm="extratrees",
