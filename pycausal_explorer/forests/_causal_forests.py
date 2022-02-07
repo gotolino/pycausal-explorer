@@ -68,6 +68,30 @@ class BaseCausalForest(BaseCausalModel):
 
 
 class CausalForestRegressor(BaseCausalForest):
+    """
+    Implementation of the Causal forests model.
+
+    It makes use of decision trees and K nearest neighbors models to find similar data points, and compares
+    their outcome when under treatment and when under control to find the effect of treatment.
+
+    Parameters
+    ----------
+    forest_algorithm : basestring
+        Which forest algorithm to use. One of "extratrees", random_forest" or"xgboost".
+
+    knn_params : dict
+        Parameters to train KNeighborsRegressor from sklearn.neighbors
+        https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsRegressor.html
+
+    random_search_params : dict
+        Randomized Search Parameters to be uses by RandomizedSearchCV from sklearn.model_selection
+        https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
+
+    model_search_params=None : dict
+        Model Search Parameters to be uses by RandomizedSearchCV from sklearn.model_selection
+        https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
+    """
+
     def __init__(
         self,
         forest_algorithm="extratrees",
@@ -149,6 +173,30 @@ class CausalForestRegressor(BaseCausalForest):
 
 
 class CausalForestClassifier(BaseCausalForest):
+    """
+    Implementation of the Causal forests model.
+
+    It makes use of decision trees and K nearest neighbors models to find similar data points, and compares
+    their outcome when under treatment and when under control to find the effect of treatment.
+
+    Parameters
+    ----------
+    forest_algorithm : basestring
+        Which forest algorithm to use. One of "extratrees", random_forest" or"xgboost".
+
+    knn_params : dict
+        Parameters to train KNeighborsRegressor from sklearn.neighbors
+        https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsRegressor.html
+
+    random_search_params : dict
+        Randomized Search Parameters to be uses by RandomizedSearchCV from sklearn.model_selection
+        https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
+
+    model_search_params=None : dict
+        Model Search Parameters to be uses by RandomizedSearchCV from sklearn.model_selection
+        https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
+    """
+
     def __init__(
         self,
         forest_algorithm="extratrees",
