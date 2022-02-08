@@ -9,7 +9,7 @@ class SingleLearner(BaseCausalModel):
     """
     Implementation of the single learner model.
 
-    It will use a provided model to predict outcome when under treatment, and use that to
+    Uses a provided model to predict outcome when under treatment, and uses that to
     estimate treatment effect.
 
     Parameters
