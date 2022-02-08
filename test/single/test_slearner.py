@@ -37,3 +37,10 @@ def test_causal_single_learner_train_forest():
     _ = single_learner.predict_ite(x)
     model_ate = single_learner.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.0001)
+
+
+def test_causal_single_learner_error():
+    try:
+        _ = SingleLearner(LinearRegression)
+    except ValueError:
+        pass
