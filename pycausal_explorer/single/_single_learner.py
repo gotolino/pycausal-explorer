@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.preprocessing import StandardScaler
+from sklearn.base import clone
 from sklearn.utils.validation import check_is_fitted, check_X_y
 
 from pycausal_explorer.base import BaseCausalModel
@@ -19,7 +19,10 @@ class SingleLearner(BaseCausalModel):
     """
 
     def __init__(self, learner):
-        self.learner = learner
+        if isinstance(learner, type):
+            raise ValueError("You should provide an instance of an estimator instead of a class.")
+        else:
+            self.learner = clone(learner)
 
     def fit(self, X, y, *, treatment):
         X, y = check_X_y(X, y)
