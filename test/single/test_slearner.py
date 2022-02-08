@@ -9,6 +9,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.base import BaseEstimator
 
+from sklearn.preprocessing import PolynomialFeatures
+
 
 def test_causal_single_learner_init():
     single_learner = SingleLearner(LinearRegression())
@@ -27,15 +29,16 @@ def test_causal_single_learner_train_linear():
     assert 1.0 == pytest.approx(model_ate, 0.0001)
 
 
-def test_causal_single_learner_train_forest():
+def test_causal_single_learner_train_polynomial():
     x, w, y = create_synthetic_data(random_seed=42)
 
-    single_learner = SingleLearner(RandomForestRegressor())
+    poly = PolynomialFeatures(degree=2, include_bias=False)
+    poly_features = poly.fit_transform(x.reshape(-1, 1))
 
-    single_learner.fit(x, y, treatment=w)
-    _ = single_learner.predict(x, w)
-    _ = single_learner.predict_ite(x)
-    model_ate = single_learner.predict_ate(x)
+    single_learner = SingleLearner(LinearRegression())
+    single_learner.fit(poly_features, y, treatment=w)
+
+    model_ate = single_learner.predict_ate(poly_features)
     assert 1.0 == pytest.approx(model_ate, 0.0001)
 
 
