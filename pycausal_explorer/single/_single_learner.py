@@ -20,7 +20,9 @@ class SingleLearner(BaseCausalModel):
 
     def __init__(self, learner):
         if isinstance(learner, type):
-            raise ValueError("You should provide an instance of an estimator instead of a class.")
+            raise ValueError(
+                "You should provide an instance of an estimator instead of a class."
+            )
         else:
             self.learner = clone(learner)
 
