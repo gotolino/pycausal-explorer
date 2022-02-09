@@ -39,8 +39,6 @@ class SingleLearner(BaseCausalModel):
 
     def predict_ite(self, X):
         check_is_fitted(self)
-        return self.fitted_model.predict(
-            np.column_stack([X, np.ones(shape=(X.shape[0], 1))])
-        ) - self.fitted_model.predict(
-            np.column_stack([X, np.zeros(shape=(X.shape[0], 1))])
+        return self.predict(X, np.ones(shape=X.shape[0])) - self.predict(
+            X, np.zeros(shape=X.shape[0])
         )
