@@ -1,5 +1,3 @@
-import numpy as np
-import pandas as pd
 import pytest
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
