@@ -16,10 +16,10 @@ class TLearner(BaseCausalModel):
     Parameters
     ----------
     treatment_learner: estimator object
-        base learner to use when predicting outcome under treatment.
+        base learner to use when predicting outcome for samples under treatment.
 
     control_learner: estimator object
-        base learner to use when predicting outcome when not under treatment.
+        base learner to use when predicting outcome for samples not under treatment.
     """
 
     def __init__(self, treatment_learner, control_learner):
