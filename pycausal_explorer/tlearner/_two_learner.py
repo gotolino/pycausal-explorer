@@ -45,9 +45,9 @@ class TLearner(BaseCausalModel):
         check_is_fitted(self)
         pred = np.copy(X)
 
-        if X[w == 1].size != 0:
+        if 1 in w:
             pred[w == 1] = self.fitted_treatment_model.predict(X[w == 1]).reshape(-1, 1)
-        if X[w == 0].size != 0:
+        if 0 in w:
             pred[w == 0] = self.fitted_control_model.predict(X[w == 0]).reshape(-1, 1)
 
         return pred
