@@ -46,9 +46,13 @@ class TLearner(BaseCausalModel):
         predictions = np.copy(X)
 
         if 1 in w:
-            predictions[w == 1] = self.fitted_treatment_model.predict(X[w == 1]).reshape(-1, 1)
+            predictions[w == 1] = self.fitted_treatment_model.predict(
+                X[w == 1]
+            ).reshape(-1, 1)
         if 0 in w:
-            predictions[w == 0] = self.fitted_control_model.predict(X[w == 0]).reshape(-1, 1)
+            predictions[w == 0] = self.fitted_control_model.predict(X[w == 0]).reshape(
+                -1, 1
+            )
 
         return predictions
 
