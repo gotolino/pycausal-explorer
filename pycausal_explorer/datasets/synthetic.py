@@ -22,6 +22,11 @@ def create_synthetic_data(size=1000, target_type="continuous", random_seed=None)
         Returns a 3 element tuple containing a common cause covariate,
         the treatment and the outcome.
     """
+    if target_type not in ["continuous", "categorical"]:
+        raise ValueError(
+            f"target_type must be 'continuous' or 'categorical', {target_type} given"
+        )
+
     if random_seed:
         np.random.seed(random_seed)
     treatment_effect = 1
