@@ -1,3 +1,5 @@
+import numpy as np
+
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.utils.validation import check_is_fitted, check_X_y
@@ -80,14 +82,14 @@ class XLearner(BaseCausalModel):
         self.is_fitted_ = True
         return self
 
-    # TODO: do it in a better way
     def predict(self, X, w):
         check_is_fitted(self)
-        predictions = []
-        for i in range(len(w)):
-            predictions.append(
-                self.u0.predict([X[i]]) if w[i] == 0 else self.u1.predict([X[i]])
-            )
+        predictions = np.empty(shape=[X.shape[0], 1])
+
+        if 1 in w:
+            predictions[w == 1] = self.u1.predict(X[w == 1]).reshape(-1, 1)
+        if 0 in w:
+            predictions[w == 0] = self.u0.predict(X[w == 0]).reshape(-1, 1)
         return predictions
 
     def predict_ite(self, X):
