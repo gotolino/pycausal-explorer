@@ -35,8 +35,8 @@ class TLearner(BaseCausalModel):
         X, y = check_X_y(X, y)
         X, w = check_X_y(X, treatment)
 
-        self.fitted_treatment_model = self.treatment_learner.fit(X[w == 1], y[w == 1])
-        self.fitted_control_model = self.control_learner.fit(X[w == 0], y[w == 0])
+        self.treatment_learner = self.treatment_learner.fit(X[w == 1], y[w == 1])
+        self.control_learner = self.control_learner.fit(X[w == 0], y[w == 0])
 
         self.is_fitted_ = True
         return self
@@ -46,11 +46,11 @@ class TLearner(BaseCausalModel):
         predictions = np.empty(shape=[X.shape[0], 1])
 
         if 1 in w:
-            predictions[w == 1] = self.fitted_treatment_model.predict(
+            predictions[w == 1] = self.treatment_learner.predict(
                 X[w == 1]
             ).reshape(-1, 1)
         if 0 in w:
-            predictions[w == 0] = self.fitted_control_model.predict(X[w == 0]).reshape(
+            predictions[w == 0] = self.control_learner.predict(X[w == 0]).reshape(
                 -1, 1
             )
 
