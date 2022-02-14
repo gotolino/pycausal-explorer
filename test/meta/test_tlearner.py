@@ -1,7 +1,7 @@
 import pytest
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
-from pycausal_explorer.tlearner import TLearner
+from pycausal_explorer.meta import TLearner
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
