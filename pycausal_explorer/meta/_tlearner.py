@@ -43,7 +43,7 @@ class TLearner(BaseCausalModel):
 
     def predict(self, X, w):
         check_is_fitted(self)
-        predictions = np.copy(X)
+        predictions = np.empty(shape=[X.shape[0], 1])
 
         if 1 in w:
             predictions[w == 1] = self.fitted_treatment_model.predict(
