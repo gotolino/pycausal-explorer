@@ -1,13 +1,10 @@
 import pytest
+from sklearn.base import BaseEstimator
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
-from pycausal_explorer.single import SingleLearner
-
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import LinearRegression
-from sklearn.base import BaseEstimator
-
-from sklearn.preprocessing import PolynomialFeatures
+from pycausal_explorer.meta import SingleLearner
 
 
 def test_causal_single_learner_init():

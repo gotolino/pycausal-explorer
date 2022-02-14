@@ -29,13 +29,13 @@ class SingleLearner(BaseCausalModel):
     def fit(self, X, y, *, treatment):
         X, y = check_X_y(X, y)
         X, w = check_X_y(X, treatment)
-        self.fitted_model = self.learner.fit(np.column_stack([X, w]), y)
+        self.learner = self.learner.fit(np.column_stack([X, w]), y)
         self.is_fitted_ = True
         return self
 
     def predict(self, X, w):
         check_is_fitted(self)
-        return self.fitted_model.predict(np.column_stack([X, w]))
+        return self.learner.predict(np.column_stack([X, w]))
 
     def predict_ite(self, X):
         check_is_fitted(self)
