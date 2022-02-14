@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
@@ -23,3 +24,17 @@ def test_synthetic_data_creation_random_seed():
     assert x[0] == pytest.approx(1.4967141530112327)
     assert w[0] == 1
     assert y[0] == pytest.approx(1.7483570765056164)
+
+
+def test_synthetic_data_binary():
+    size = 1000
+    x, w, y = create_synthetic_data(size, target_type="binary", random_seed=42)
+    assert np.array_equal(y, y.astype(bool))
+
+
+def test_synthetic_data_raise_param_error():
+    size = 1000
+    with pytest.raises(ValueError):
+        x, w, y = create_synthetic_data(
+            size, target_type="not_a_target", random_seed=42
+        )

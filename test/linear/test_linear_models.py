@@ -17,7 +17,7 @@ def test_causal_linear_regression_init():
 
 
 def test_causal_logistic_regression_train():
-    x, w, y = create_synthetic_data(random_seed=42, target_type="categorical")
+    x, w, y = create_synthetic_data(random_seed=42, target_type="binary")
 
     causal_logistic_regression = CausalLogisticRegression()
 
