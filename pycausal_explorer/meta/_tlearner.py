@@ -46,13 +46,11 @@ class TLearner(BaseCausalModel):
         predictions = np.empty(shape=[X.shape[0], 1])
 
         if 1 in w:
-            predictions[w == 1] = self.treatment_learner.predict(
-                X[w == 1]
-            ).reshape(-1, 1)
-        if 0 in w:
-            predictions[w == 0] = self.control_learner.predict(X[w == 0]).reshape(
+            predictions[w == 1] = self.treatment_learner.predict(X[w == 1]).reshape(
                 -1, 1
             )
+        if 0 in w:
+            predictions[w == 0] = self.control_learner.predict(X[w == 0]).reshape(-1, 1)
 
         return predictions
 
