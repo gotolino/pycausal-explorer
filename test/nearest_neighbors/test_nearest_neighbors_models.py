@@ -41,7 +41,7 @@ def test_causal_knn_regressor_init_raise_exception():
 
 
 def test_causal_knn_classifier_train():
-    x, w, y = create_synthetic_data(random_seed=42, target_type="categorical")
+    x, w, y = create_synthetic_data(random_seed=42, target_type="binary")
 
     causal_knn_classifier = CausalKNNClassifier(params={"n_neighbors": 20})
 

@@ -74,7 +74,7 @@ def test_causal_forest_regressor_init_raise_exception():
 
 
 def test_causal_forest_classifier_train():
-    x, w, y = create_synthetic_data(random_seed=42, target_type="categorical")
+    x, w, y = create_synthetic_data(random_seed=42, target_type="binary")
 
     causal_forest_classifier = CausalForestClassifier(
         random_search_params={

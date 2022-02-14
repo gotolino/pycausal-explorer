@@ -28,7 +28,7 @@ def test_synthetic_data_creation_random_seed():
 
 def test_synthetic_data_binary():
     size = 1000
-    x, w, y = create_synthetic_data(size, target_type="categorical", random_seed=42)
+    x, w, y = create_synthetic_data(size, target_type="binary", random_seed=42)
     assert np.array_equal(y, y.astype(bool))
 
 
