@@ -70,7 +70,5 @@ def test_tlearner_train_polynomial():
 
 
 def test_tlearner_error():
-    try:
-        _ = TLearner(LinearRegression, LinearRegression)
-    except ValueError:
-        pass
+    with pytest.raises(ValueError):
+        _ = TLearnerRegressor(LinearRegression, LinearRegression)
