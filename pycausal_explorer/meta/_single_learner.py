@@ -42,7 +42,7 @@ class SingleLearnerRegressor(SingleLearnerBase):
     """
 
     def __init__(self, learner):
-        super().__init__()
+        super().__init__(learner)
         self._estimator_type = "regressor"
 
     def predict_ite(self, X):
