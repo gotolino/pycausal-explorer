@@ -39,7 +39,7 @@ def test_causal_single_learner_train_polynomial():
 
 
 def test_causal_single_learner_train_logistic():
-    x, w, y = create_synthetic_data(random_seed=42)
+    x, w, y = create_synthetic_data(random_seed=42, target_type="binary")
 
     single_learner = SingleLearnerLogistic(SVC(probability=True))
     single_learner.fit(x, y, treatment=w)
