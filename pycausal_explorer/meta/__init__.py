@@ -1,2 +1,2 @@
 from ._xlearner import XLearner
-from ._tlearner import TLearner
+from ._tlearner import TLearnerRegressor

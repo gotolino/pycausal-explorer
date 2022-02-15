@@ -5,7 +5,7 @@ from sklearn.utils.validation import check_is_fitted, check_X_y
 from pycausal_explorer.base import BaseCausalModel
 
 
-class TLearner(BaseCausalModel):
+class BaseTLearner(BaseCausalModel):
     """
     Implementation of the two learner model, also known as grouped conditional outcome model (GCOM).
 
@@ -16,10 +16,10 @@ class TLearner(BaseCausalModel):
     Parameters
     ----------
     treatment_learner: estimator object
-        base learner to use when predicting outcome for samples under treatment.
+        base learner for samples under treatment.
 
     control_learner: estimator object
-        base learner to use when predicting outcome for samples not under treatment.
+        base learner for samples not under treatment.
     """
 
     def __init__(self, treatment_learner, control_learner):
@@ -30,6 +30,7 @@ class TLearner(BaseCausalModel):
         else:
             self.treatment_learner = clone(treatment_learner)
             self.control_learner = clone(control_learner)
+        self.is_fitted_ = False
 
     def fit(self, X, y, *, treatment):
         X, y = check_X_y(X, y)
@@ -40,6 +41,18 @@ class TLearner(BaseCausalModel):
 
         self.is_fitted_ = True
         return self
+
+    def predict_ite(self, X):
+        check_is_fitted(self)
+        return self.predict(X, np.ones(shape=X.shape[0])) - self.predict(
+            X, np.zeros(shape=X.shape[0])
+        )
+
+
+class TLearnerRegressor(BaseTLearner):
+    def __init__(self, treatment_learner, control_learner):
+        super().__init__(treatment_learner, control_learner)
+        self._estimator_type = "regressor"
 
     def predict(self, X, w):
         check_is_fitted(self)
@@ -53,9 +66,3 @@ class TLearner(BaseCausalModel):
             predictions[w == 0] = self.control_learner.predict(X[w == 0]).reshape(-1, 1)
 
         return predictions
-
-    def predict_ite(self, X):
-        check_is_fitted(self)
-        return self.predict(X, np.ones(shape=X.shape[0])) - self.predict(
-            X, np.zeros(shape=X.shape[0])
-        )
