@@ -29,7 +29,7 @@ def test_tlearner_train_linear():
 
 
 def test_tlearner_train_logistic():
-    x, w, y = create_synthetic_data(random_seed=42, target_type="categorical")
+    x, w, y = create_synthetic_data(random_seed=42, target_type="binary")
 
     tlearner = TLearnerLogistic(LogisticRegression(), LogisticRegression())
 
