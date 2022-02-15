@@ -2,6 +2,7 @@ import pytest
 from sklearn.base import BaseEstimator
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.preprocessing import PolynomialFeatures
+from sklearn.svm import SVC
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
 from pycausal_explorer.meta import SingleLearnerRegressor, SingleLearnerLogistic
@@ -40,7 +41,7 @@ def test_causal_single_learner_train_polynomial():
 def test_causal_single_learner_train_logistic():
     x, w, y = create_synthetic_data(random_seed=42)
 
-    single_learner = SingleLearnerLogistic(LogisticRegression())
+    single_learner = SingleLearnerLogistic(SVC(probability=True))
     single_learner.fit(x, y, treatment=w)
     model_ate = single_learner.predict_ate(x)
 
