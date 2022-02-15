@@ -27,6 +27,7 @@ def test_tlearner_train_linear():
     model_ate = tlearner.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.0001)
 
+
 def test_tlearner_train_logistic():
     x, w, y = create_synthetic_data(random_seed=42, target_type="categorical")
 
@@ -39,6 +40,7 @@ def test_tlearner_train_logistic():
 
     # Logistic models are not as good as regressors :(
     assert model_ate > 0.5
+
 
 def test_tlearner_train_forest():
     x, w, y = create_synthetic_data(random_seed=42)
