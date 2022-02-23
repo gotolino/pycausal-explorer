@@ -76,6 +76,7 @@ class SingleLearnerClassifier(SingleLearnerBase):
 
     def predict_ite(self, X):
         check_is_fitted(self)
-        return self.predict_proba(X, np.ones(shape=X.shape[0]))[
-            :, 1
-        ] - self.predict_proba(X, np.zeros(shape=X.shape[0]))[:, 1]
+        return (
+            self.predict_proba(X, np.ones(shape=X.shape[0]))[:, 1]
+            - self.predict_proba(X, np.zeros(shape=X.shape[0]))[:, 1]
+        )
