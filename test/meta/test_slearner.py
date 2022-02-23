@@ -5,7 +5,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import SVC
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
-from pycausal_explorer.meta import SingleLearnerRegressor, SingleLearnerLogistic
+from pycausal_explorer.meta import SingleLearnerRegressor, SingleLearnerClassifier
 
 
 def test_causal_single_learner_init():

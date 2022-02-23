@@ -52,7 +52,7 @@ class SingleLearnerRegressor(SingleLearnerBase):
         )
 
 
-class SingleLearnerLogistic(SingleLearnerBase):
+class SingleLearnerClassifier(SingleLearnerBase):
     """
     Implementation of the single learner model.
 
