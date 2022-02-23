@@ -72,10 +72,10 @@ class SingleLearnerClassifier(SingleLearnerBase):
         self._estimator_type = "classifier"
 
     def predict_proba(self, X, w):
-        return self.learner.predict_proba(np.column_stack([X, w]))[:, 1]
+        return self.learner.predict_proba(np.column_stack([X, w]))
 
     def predict_ite(self, X):
         check_is_fitted(self)
-        return self.predict_proba(X, np.ones(shape=X.shape[0])) - self.predict_proba(
-            X, np.zeros(shape=X.shape[0])
-        )
+        return self.predict_proba(X, np.ones(shape=X.shape[0]))[
+            :, 1
+        ] - self.predict_proba(X, np.zeros(shape=X.shape[0])[:, 1])
