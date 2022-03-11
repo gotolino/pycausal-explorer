@@ -35,5 +35,5 @@ def test_doubleml_train_linear():
 
     double_learner.fit(x, y, treatment=w)
     _ = double_learner.predict_ite(x)
-    model_ate = double_learner.predict_ate(x)
+    _ = double_learner.predict_ate(x)
     # Linear doubleML performs pretty badly on binary treatment datasets, so no tests on the ATE yet
