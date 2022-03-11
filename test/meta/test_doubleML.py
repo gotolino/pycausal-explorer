@@ -18,7 +18,9 @@ def test_doubleml_init():
 def test_doubleml_train_binary():
     x, w, y = create_synthetic_data(random_seed=42)
 
-    double_learner = DoubleMLBinaryTreatment(RandomForestRegressor(), SVC(probability=True))
+    double_learner = DoubleMLBinaryTreatment(
+        RandomForestRegressor(), SVC(probability=True)
+    )
 
     double_learner.fit(x, y, treatment=w)
     _ = double_learner.predict_ite(x)

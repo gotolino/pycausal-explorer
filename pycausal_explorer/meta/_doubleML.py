@@ -12,7 +12,7 @@ class DoubleMLLinear(BaseCausalModel):
     Double Machine Learning model. Estimates causal effect using two different models:
     one models outcome, and another models treatment.
 
-    Linear version. Should be used when you believe treatment effect is linear, and when
+    Linear version. Should be used when you believe treatment effect is linear, and
     the treatment variable is continuous
 
     Parameters
@@ -22,27 +22,32 @@ class DoubleMLLinear(BaseCausalModel):
     treatment_learner : estimator object
         base learner to use when predicting treatment. Should implement fit and predict methods.
     score : basestring
-        Which score function to use. One of "partial-out" and "other-one"
+        Which score function to use. One of "partial-out" and "orthogonal"
     """
 
-    def __init__(self, outcome_learner, treatment_learner, score="partial-out"):
-        valid_scores = ["partial-out", "other-one"]
+    def __init__(
+        self, outcome_learner, treatment_learner, score="partial-out", k_fold=5
+    ):
+        valid_scores = ["partial-out", "orthogonal"]
         if score not in valid_scores:
             raise ValueError("Score has to be one of " + str(valid_scores))
         self.outcome_leaner = clone(outcome_learner)
         self.treatment_learner = clone(treatment_learner)
 
+        self.k_fold = k_fold
         self.score = score
         self.is_fitted_ = False
 
     def fit(self, X, y, *, treatment):
         self.is_fitted_ = True
-        pred_outcome = cross_val_predict(self.outcome_leaner, X, y)
-        pred_treatment = cross_val_predict(self.treatment_learner, X, treatment)
+        pred_outcome = cross_val_predict(self.outcome_leaner, X, y, cv=self.k_fold)
+        pred_treatment = cross_val_predict(
+            self.treatment_learner, X, treatment, cv=self.k_fold
+        )
 
         if self.score == "partial-out":
             self._psi_a = (-treatment * (treatment - pred_treatment)).mean()
-        elif self.score == "other-one":
+        elif self.score == "orthogonal":
             self._psi_a = (-np.square(treatment - pred_treatment)).mean()
         self._psi_b = ((y - pred_outcome) * (treatment - pred_treatment)).mean()
 
