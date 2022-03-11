@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="pycausal-explorer",
-    version="0.0.1",
+    version="0.1.0",
     url="https://github.com/gotolino/causal-learn",
     description="Python causal inference modules",
     packages=find_packages(exclude=["test*"]),
