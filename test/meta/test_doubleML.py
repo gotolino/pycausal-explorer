@@ -42,7 +42,9 @@ def test_doubleml_train_linear():
 def test_doubleml_train_linear_orthogonalscore():
     x, w, y = create_synthetic_data(random_seed=42)
 
-    double_learner = DoubleMLLinear(RandomForestRegressor(), RandomForestRegressor(), score="orthogonal")
+    double_learner = DoubleMLLinear(
+        RandomForestRegressor(), RandomForestRegressor(), score="orthogonal"
+    )
 
     double_learner.fit(x, y, treatment=w)
     _ = double_learner.predict_ite(x)
