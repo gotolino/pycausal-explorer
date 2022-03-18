@@ -9,7 +9,7 @@ Welcome to pycausal explorer's documentation!
 
 
 Hello, and welcome to our docs! pycausal explorer is a causal inference library mostly focused on
-implementing models that predict causal outcome.
+implementing models that predict causal effect.
 If you don't know what causal inference is, you can check the `definition <https://en.wikipedia.org/wiki/Causal_inference>`_
 or study it more comprehensively `using brandy neal's materials <https://www.bradyneal.com/causal-inference-course>`_.
 
