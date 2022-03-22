@@ -3,7 +3,7 @@ Example
 
 .. TODO: Make dataset link to explanation about libraries datasets
 
-This page goes over a simple usage of the library. We will train a model over a synthetic dataset(TODO: link here) and predict
+This page goes over a simple usage of the library. We will train a model over a synthetic :mod:`dataset<pycausal_explorer.datasets.synthetic>` and predict
 the causal effect of the treatment variable.
 Since the dataset is synthetic, we know the real causal effect and can validate the model.
 

@@ -33,46 +33,51 @@ Models
 Most of the features this library offers are models that predict causal effect. A compreensive list can be found at
 :doc:`model_list`. Here we outline each of them:
 
-**Linear Learners**
+* **Linear Learners**
 
 Linear learners are simple models, that work best on linearly generated data.
 
   :mod:`pycausal_explorer.linear._linear_models`
 
-**Meta learners**
+* **Meta learners**
 
 Meta learners make use of other machine learning models to predict causal effect.
 Their effectiveness depends on how well the provided model can predict the relevant variables.
 
- :mod:`pycausal_explorer.meta._single_learner`
- :mod:`pycausal_explorer.meta._tlearner`
- :mod:`pycausal_explorer.meta._xlearner`
+   | :mod:`pycausal_explorer.meta._single_learner`
+   | :mod:`pycausal_explorer.meta._tlearner`
+   | :mod:`pycausal_explorer.meta._xlearner`
 
-**Causal Forests**
+* **Nearest Neighbors**
 
-Causal forests make use of random forests to find the conditional average treatment effect, or CATE.
-   :mod:`pycausal_explorer.forests._causal_forests`
-
-
-**Nearest Neighbors**
-
+The Nearest Neighbors model will find the most similar element in the control and treatment groups, and use their difference
+to find out the effect of treatment.
   :mod:`pycausal_explorer.nearest_neighbors._k_nearest_neighbors`
 
+* **Causal Forests**
 
-**Re Weight**
+The Causal Forests model assumes the data roughly follow that of a randomized experiment, that is, two similar groups
+were randomly giver the treatment or not. Under those conditions, it uses random forests to find out how the treatment
+effect will differ across the population, the heterogeneous treatment effect.
+   :mod:`pycausal_explorer.forests._causal_forests`
 
+* **Propensity score**
+
+The propensity score model aims to represent all covariates as a single scalar, the propensity for treatment to occur.
+This simplifies the estimation of treatment effect.
   :mod:`pycausal_explorer.reweight._iptw`
-  :mod:`pycausal_explorer.reweight._propensity_score`
 
 
-|
+Datasets
+-------------
+
+Pycausal explorer also offers datasets to validate causal inference models. Check them out :doc:`here<datasets>`
+
+
 
 Indices and tables
 ---------------------
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
 .. toctree::
    :maxdepth: 2
@@ -80,3 +85,9 @@ Indices and tables
 
    example
    model_list
+   datasets
+
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
