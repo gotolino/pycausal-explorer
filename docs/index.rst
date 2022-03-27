@@ -75,19 +75,16 @@ Pycausal explorer also offers datasets to validate causal inference models. Chec
 
 
 
-Indices and tables
+Indices
 ---------------------
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   example
-   model_list
-   datasets
-
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Library contents:
+
+   model_list
+   example
+   datasets
