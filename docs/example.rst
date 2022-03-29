@@ -61,12 +61,21 @@ two situations: you either make a lot of blunders, or you dont.
     treatment_col = "White's Number of Blunders"
     treatment = (df[treatment_col] >= df[treatment_col].mean()).astype(int)
 
+We then create our model. We are going to use the SLearner, a meta learner, using sklearn's causal forests.
+
+.. code-block:: python
+    from pycausal_explorer.meta import SingleLearnerRegressor
+    from sklearn.ensemble import RandomForestRegressor
+
+    learner = SingleLearnerRegressor(RandomForestRegressor())
+
+
 We will then fit our model to the data, and predict the treatment effect
 
 .. code-block:: python
 
-    lin_reg.fit(df[["Black Rating", "White Rating", "Black's Number of Blunders"]], df["Black Centi-pawn Loss"], treatment=treatment)
-    resB = lin_reg.predict_ite(df[["Black Rating", "White Rating", "Black's Number of Blunders"]])
+    learner.fit(df[["Black Rating", "White Rating", "Black's Number of Blunders"]], df["Black Centi-pawn Loss"], treatment=treatment)
+    resB = learner.predict_ite(df[["Black Rating", "White Rating", "Black's Number of Blunders"]])
     print("Effect of white's blunders on black's loss: ", resB.mean())
 
 .. code-block:: console
@@ -79,8 +88,8 @@ So let's move on to the effect on *white's* centipawn loss
 
 .. code-block:: python
 
-    lin_reg.fit(df[["Black Rating", "White Rating", "Black's Number of Blunders"]], df["White Centi-pawn Loss"], treatment=treatment)
-    resB = lin_reg.predict_ite(df[["Black Rating", "White Rating", "Black's Number of Blunders"]])
+    learner.fit(df[["Black Rating", "White Rating", "Black's Number of Blunders"]], df["White Centi-pawn Loss"], treatment=treatment)
+    resB = learner.predict_ite(df[["Black Rating", "White Rating", "Black's Number of Blunders"]])
     print("Effect of white's blunders on whitw's loss: ", resB.mean())
 
 .. code-block:: console
