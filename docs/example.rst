@@ -64,6 +64,7 @@ two situations: you either make a lot of blunders, or you dont.
 We then create our model. We are going to use the SLearner, a meta learner, using sklearn's causal forests.
 
 .. code-block:: python
+
     from pycausal_explorer.meta import SingleLearnerRegressor
     from sklearn.ensemble import RandomForestRegressor
 
