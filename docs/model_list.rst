@@ -1,6 +1,9 @@
 Model List
 -------------
 
+Here, every model currently implemented is listed, alongside it's methods. If you dont
+know which model to chose, we have a guide :doc:`here<guide>`
+
 .. automodule:: pycausal_explorer.forests._causal_forests
    :members:
 

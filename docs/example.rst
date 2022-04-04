@@ -2,7 +2,7 @@ Example
 -------------
 
 This page goes over a simple usage of the library. We will analyse a `chess matches dataset <https://www.kaggle.com/datasets/ahmedalghafri/lichess-chess-games-statistics>`_
-to determine the effect of blunders on centupawn loss.
+to determine the effect of blunders on centipawn loss.
 
 Analysing the problem
 """""""""""""""""""""
@@ -61,7 +61,8 @@ two situations: you either make a lot of blunders, or you dont.
     treatment_col = "White's Number of Blunders"
     treatment = (df[treatment_col] >= df[treatment_col].mean()).astype(int)
 
-We then create our model. We are going to use the SLearner, a meta learner, using sklearn's causal forests.
+We then create our model. We are going to use the :mod:`pycausal_explorer.linear._linear_models`,
+a meta learner, using sklearn's causal forests as the predictor.
 
 .. code-block:: python
 
@@ -99,5 +100,5 @@ So let's move on to the effect on *white's* centipawn loss
 
 We can see it's somewhat big, as it should be.
 
-By now you should have an idea of how this library's work. If you want to know every model we have,
-check out our :doc:`model_list`.
+By now you should have an idea of how this library's work. If you want to decide which model to use,
+check out out :doc:`guide`. If you want to know every model we have, we also have a :doc:`model_list`.
