@@ -5,10 +5,13 @@ use cases.
 
 Meta learners
 ==============
-Meta learners rely on machine learning models that predict outcome.
+Meta learners rely on machine learning models that predict outcome. Their performance
+is tied to how well the provided model can learn the outcome function. `[1]`_
+
+
 
 They perform poorly when the outcome is hard to predict, such as when there
-are too many covariables or the generating function is too complex. They are also
+are too many covariables or the generating function is too complex. `[2]`_ They are also
 strongly affected by regularization.
 
 Bellow we outline each one. Overall, unless the SLearner's bias towards zero
@@ -17,20 +20,20 @@ is desirable, the XLearner has the best convergence rate.
 SLearner
 """"""""""
 The Slearner treats the treatment indicator like any
-other predictor. [1] (https://arxiv.org/pdf/1706.03461.pdf ). It is often biased towards 0,
-and is more accurate when treatment effect is often low.
+other predictor. `[1]`_. It is often biased towards 0,
+and is more accurate when treatment effect is often 0 or close to 0.
 
 TLearner
 """"""""""
 The Tlearner does not combine the treated and control groups, but instead
 creates a model for each. It's less data efficient, but performs better when both
-groups behave very differently.
+groups behave very differently. `[1]`_
 
 XLearner
 """"""""""
 The XLearner applies a machine learning model to predict treatment effect, on top
-of the ones to predict treatment and control groups. It performs better all around,
-and particularly well when there are many more entries in one group than in the other.
+of the ones to predict treatment and control groups. `[1]`_ It performs better all around,
+and particularly well when there are many more entries in one group than in the other. `[2]`_
 
 Linear
 """"""""""
@@ -38,21 +41,38 @@ Linear models are versions of the SLearner restricted to the LinearRegressor
 and LogisticRegressor models. They are implemented mostly for educational purposes.
 
 
+
+
+
 Causal Forests
 =================
 The causal forests model makes use of two different models: a random forest to reduce
 noise, and a KNN to match the feature to the nearby features that went trough treatment,
-and the ones that did not.
+and the ones that did not. `[5]`_
 
 Causal forests are very good at predicting complex treatment effects, that vary strongly
-and non-linearly between features. They also preform wel
+and non-linearly between features. They can perform well even the outcome function is
+very complex, since they do not need to estimate it.  `[3]`_  `[4]`_
 
 Nearest Neighbor
 """"""""""""""""""""
 The nearest neighbors model aims to find similar data points to the one being analysed.
 It generally performs worse than the causal forests model.
 
+IPTW
+=================
+The Inverse Probability Treatment Weighting (IPTW) model will use the propensity score,
+which is the likelihood every feature has of being treated, as a replacement for all the covariables.
+As a result the treatment effect estimation is simplified.
 
-https://arxiv.org/pdf/1706.03461.pdf (meta learners)
-https://www.statworx.com/en/content-hub/blog/machine-learning-goes-causal-ii-meet-the-random-forests-causal-brother/ (causal forests)
+
+
+.. _[1]: https://www.bradyneal.com/Introduction_to_Causal_Inference-Dec17_2020-Neal.pdf
+.. _[2]: https://arxiv.org/pdf/1706.03461.pdf
+
+.. _[3]: https://www.bradyneal.com/Introduction_to_Causal_Inference-Dec17_2020-Neal.pdf
+.. _[4]: https://arxiv.org/pdf/1706.03461.pdf
+
+.. _[5]: https://www.statworx.com/en/content-hub/blog/machine-learning-goes-causal-ii-meet-the-random-forests-causal-brother/ (causal forests)
+
 

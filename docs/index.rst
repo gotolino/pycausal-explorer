@@ -13,7 +13,7 @@ implementing models that predict causal effect.
 If you don't know what causal inference is, you can check the `definition <https://en.wikipedia.org/wiki/Causal_inference>`_
 or study it more comprehensively `using brandy neal's materials <https://www.bradyneal.com/causal-inference-course>`_.
 
-Bellow we outline the libraries models and provide a :doc:`guide` on which to pick.
+Below we outline the libraries models and provide a :doc:`guide` on which to pick.
 If you just want to see how it works, check out our :doc:`example`.
 
 Install
