@@ -56,6 +56,6 @@ def test_doubleml_invalide_score():
     x, w, y = create_synthetic_data(random_seed=42)
 
     with pytest.raises(ValueError):
-        double_learner = DoubleMLLinear(
+        _ = DoubleMLLinear(
             RandomForestRegressor(), RandomForestRegressor(), score="invalid"
         )
