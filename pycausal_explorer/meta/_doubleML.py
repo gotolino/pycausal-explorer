@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.model_selection import cross_val_predict, train_test_split
-from sklearn.utils.validation import check_is_fitted
+from sklearn.utils.validation import check_is_fitted, check_X_y
 
 from pycausal_explorer.base import BaseCausalModel
 
@@ -39,17 +39,19 @@ class DoubleMLLinear(BaseCausalModel):
         self.is_fitted_ = False
 
     def fit(self, X, y, *, treatment):
-        self.is_fitted_ = True
+        X, y = check_X_y(X, y)
+        X, w = check_X_y(X, treatment)
+
         pred_outcome = cross_val_predict(self.outcome_leaner, X, y, cv=self.k_fold)
-        pred_treatment = cross_val_predict(
-            self.treatment_learner, X, treatment, cv=self.k_fold
-        )
+        pred_treatment = cross_val_predict(self.treatment_learner, X, w, cv=self.k_fold)
 
         if self.score == "partial-out":
-            self._psi_a = (-treatment * (treatment - pred_treatment)).mean()
+            self._psi_a = (-w * (w - pred_treatment)).mean()
         elif self.score == "orthogonal":
-            self._psi_a = (-np.square(treatment - pred_treatment)).mean()
-        self._psi_b = ((y - pred_outcome) * (treatment - pred_treatment)).mean()
+            self._psi_a = (-np.square(w - pred_treatment)).mean()
+        self._psi_b = ((y - pred_outcome) * (w - pred_treatment)).mean()
+
+        self.is_fitted_ = True
 
     def predict_ite(self, X):
         check_is_fitted(self)
@@ -79,9 +81,10 @@ class DoubleMLBinaryTreatment(BaseCausalModel):
         self.is_fitted_ = False
 
     def fit(self, X, y, *, treatment):
-        self.is_fitted_ = True
+        X, y = check_X_y(X, y)
+        X, w = check_X_y(X, treatment)
 
-        X_t, X_r, y_t, y_r, w_t, w_r = train_test_split(X, y, treatment, train_size=0.5)
+        X_t, X_r, y_t, y_r, w_t, w_r = train_test_split(X, y, w, train_size=0.5)
         reg_size = X_r.shape[0]
 
         self.outcome_leaner.fit(np.column_stack([w_t, X_t]), y_t)
@@ -103,6 +106,8 @@ class DoubleMLBinaryTreatment(BaseCausalModel):
             * (y_r - pred_y_cont)
             / (np.ones(reg_size) - pred_w)
         ).mean()
+
+        self.is_fitted_ = True
 
     def predict_ite(self, X):
         check_is_fitted(self)

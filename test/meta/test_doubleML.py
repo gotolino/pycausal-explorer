@@ -50,3 +50,12 @@ def test_doubleml_train_linear_orthogonalscore():
     _ = double_learner.predict_ite(x)
     _ = double_learner.predict_ate(x)
     # Linear doubleML performs pretty badly on binary treatment datasets, so no tests on the ATE yet
+
+
+def test_doubleml_invalide_score():
+    x, w, y = create_synthetic_data(random_seed=42)
+
+    with pytest.raises(ValueError):
+        double_learner = DoubleMLLinear(
+            RandomForestRegressor(), RandomForestRegressor(), score="invalid"
+        )
