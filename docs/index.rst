@@ -47,6 +47,7 @@ Their effectiveness depends on how well the provided model can predict the relev
    | :mod:`pycausal_explorer.meta._single_learner`
    | :mod:`pycausal_explorer.meta._tlearner`
    | :mod:`pycausal_explorer.meta._xlearner`
+   | :mod:`pycausal_explorer.meta._doubleML`
 
 |
 

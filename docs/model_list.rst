@@ -19,6 +19,9 @@ know which model to chose, we have a guide :doc:`here<guide>`
 .. automodule:: pycausal_explorer.meta._xlearner
    :members:
 
+.. automodule:: pycausal_explorer.meta._doubleML
+   :members:
+
 .. automodule:: pycausal_explorer.nearest_neighbors._k_nearest_neighbors
    :members:
 
