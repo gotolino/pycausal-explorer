@@ -38,16 +38,22 @@ and particularly well when there are many more entries in one group than in the 
 Double / Debiased learner
 --------------------------
 The Double learner, also known as Debiased learner, is a meta learner that aims to discover traits of a
-dataset's data generating function rather than of the outcome itself. It performs
-well even when there are many covariables `[5]`_ , but each version of the model
-makes strong assumptions about the data generating function. `[7]`_
+dataset's data generating function rather than of the outcome itself.
+
+By training a leaner to predict the impact the covariables have on the outcome, and
+likewise for the treatment, the model can subtract said impact to 'debias' the data, allowing for more direct
+inference of the relation between outcome and treatment.
+
+It performs well even when there are many covariables `[5]`_ , and can avoid overfitting
+fairly well by means of K fold validation. `[7]`_
 
 **Double ML linear**
 
 Linear version. Should be used when treatment effect is linear, and
 the treatment variable is continuous. Assumes the data is distributed according to the model:
 
-:math:`\begin{align}\begin{aligned}Y = D \theta_0 + g_0(X) + \zeta\\D = m_0(X) + V\end{aligned}\end{align}`
+| :math:`Y = D \theta_0 + g_0(X) + \zeta`
+| :math:`D = m_0(X) + V`
 
 where
 
@@ -66,7 +72,8 @@ The functions :math:`g_0` and :math:`m_0` are estimated by learners provided by 
 Binary treatment version. Should be used when treatment is a binary variable.
 Assumes the data is distributed according to the model:
 
-:math:`\begin{align}\begin{aligned}Y = g_0(D, X) + U\\D = m_0(X) + V\end{aligned}\end{align}`
+| :math:`Y = g_0(D, X) + U`
+| :math:`D = m_0(X) + V`
 
 where
 
