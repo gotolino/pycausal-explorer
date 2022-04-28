@@ -3,7 +3,13 @@ import numpy as np
 
 def create_synthetic_data(size=1000, target_type="continuous", random_seed=None):
     """
-    Creates a synthetic dataset with explicit causal effects.
+    Creates a synthetic dataset with explicit causal effects. The generating function is as follows:
+
+    - the covariate x is normally distributed with mu = 1 and sigma = 1;
+    - the treatment is binomially distributed where n=1 and the chance of success is (x + 0.5) / 10. As a result, it's either 0 or 1 depending on x;
+    - the ouctcome y is 0.5 * x + treatment effect * treatment.
+
+    The result is a treatment and outcome that depend on a covariate x. This will generate bias when attempting to predict causal effect.
 
 
     Parameters
