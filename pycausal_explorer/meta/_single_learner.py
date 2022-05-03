@@ -21,7 +21,10 @@ class SingleLearnerBase(BaseCausalModel):
         self.is_fitted_ = True
         return self
 
-    def predict(self, X, w):
+    def predict(self, X, w=None):
+        if w is None:
+            w = np.array (X)[:, -1]
+            X = np.copy(np.array(X)[:, :-1])
         check_is_fitted(self)
         return self.learner.predict(np.column_stack([X, w]))
 
