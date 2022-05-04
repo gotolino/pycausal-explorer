@@ -88,7 +88,9 @@ def test_causal_forest_classifier_train():
 
     causal_forest_classifier.fit(x, y, treatment=w)
     _ = causal_forest_classifier.predict(x, w)
-    _ = causal_forest_classifier.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
+    _ = causal_forest_classifier.predict(
+        np.concatenate((x, w.reshape((-1, 1))), axis=1)
+    )
     _ = causal_forest_classifier.predict_proba(x, w)
     _ = causal_forest_classifier.predict_ite(x)
 
