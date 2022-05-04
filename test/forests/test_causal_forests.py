@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 from scipy.stats import randint
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
@@ -87,6 +88,7 @@ def test_causal_forest_classifier_train():
 
     causal_forest_classifier.fit(x, y, treatment=w)
     _ = causal_forest_classifier.predict(x, w)
+    _ = causal_forest_classifier.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = causal_forest_classifier.predict_proba(x, w)
     _ = causal_forest_classifier.predict_ite(x)
 
@@ -105,6 +107,7 @@ def test_causal_forest_regressor_train():
 
     causal_forest_regressor.fit(x, y, treatment=w)
     _ = causal_forest_regressor.predict(x, w)
+    _ = causal_forest_regressor.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = causal_forest_regressor.predict_ite(x)
     model_ate = causal_forest_regressor.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.02)

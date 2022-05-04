@@ -23,6 +23,7 @@ def test_causal_logistic_regression_train():
 
     causal_logistic_regression.fit(x, y, treatment=w)
     _ = causal_logistic_regression.predict(x, w)
+    _ = causal_logistic_regression.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = causal_logistic_regression.predict_proba(x, w)
     _ = causal_logistic_regression.predict_ite(x)
 
@@ -34,6 +35,7 @@ def test_causal_linear_regression_train():
 
     causal_linear_regression.fit(x, y, treatment=w)
     _ = causal_linear_regression.predict(x, w)
+    _ = causal_linear_regression.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = causal_linear_regression.predict_ite(x)
     model_ate = causal_linear_regression.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.0001)

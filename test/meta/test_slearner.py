@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 from sklearn.base import BaseEstimator
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.preprocessing import PolynomialFeatures
@@ -20,6 +21,7 @@ def test_causal_single_learner_train_linear():
 
     single_learner.fit(x, y, treatment=w)
     _ = single_learner.predict(x, w)
+    _ = single_learner.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = single_learner.predict_ite(x)
     model_ate = single_learner.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.0001)
