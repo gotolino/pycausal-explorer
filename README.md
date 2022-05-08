@@ -5,6 +5,7 @@
 
 Pycausal-explorer is a python module for causal inference and treatment effect estimation. It implements a set of 
 algorithms that supports causal analysis.
+A complete documentation can be found at https://pycausal-explorer.readthedocs.io/en/latest/ .
 
 ## Installation Guide ##
 
@@ -22,12 +23,12 @@ from pycausal_explorer.meta import XLearner
 
 x, treatment, y = create_synthetic_data()
 model = XLearner()
-model.fit(x, treatment, y)
+model.fit(x, y, treatment=treatment)
 treatment_effect = model.predict_ite(x)
 ```
 
 ## Current Implemented Models ##
-This version currently implements propensity score and iptw in the reweight package, linear regression in the linear package, causal forests in forest package and x-learn in meta package. 
+This version currently implements propensity score and iptw in the reweight package, linear regression in the linear package, causal forests in forest package and x-learn, slearner tlearner and doubleml in meta package. 
 
 ## Using Pipelines ##
 
