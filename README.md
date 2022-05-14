@@ -17,7 +17,7 @@ You can install the package through pip:
 All models are inherited from BaseCausalModel, that inherits from scikit-learn BaseEstimator. 
 It uses scikit-learn framework to fit and predict the outcome. It implements predict_ite and predict_ate
 methods that return the individual treatment effect and the average treatment effect, respectively.
-```
+```python
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
 from pycausal_explorer.meta import XLearner
 
@@ -34,7 +34,7 @@ This version currently implements propensity score and iptw in the reweight pack
 
 Pycausal-explorer has a Pipeline class inherited from scikit-learn Pipeline. 
 It implements the method predict_ite, so it can be used pro predict treatment effect in a pipeline:
-```
+```python
 from sklearn.preprocessing import StandardScaler
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
