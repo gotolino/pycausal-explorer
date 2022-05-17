@@ -3,6 +3,7 @@ import pytest
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
 from pycausal_explorer.meta import TLearnerRegressor, TLearnerLogistic
 
+import numpy as np
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.base import BaseEstimator
@@ -23,6 +24,7 @@ def test_tlearner_train_linear():
 
     tlearner.fit(x, y, treatment=w)
     _ = tlearner.predict(x, w)
+    _ = tlearner.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = tlearner.predict_ite(x)
     model_ate = tlearner.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.0001)
@@ -35,6 +37,7 @@ def test_tlearner_train_logistic():
 
     tlearner.fit(x, y, treatment=w)
     _ = tlearner.predict(x, w)
+    _ = tlearner.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = tlearner.predict_ite(x)
     model_ate = tlearner.predict_ate(x)
 
@@ -49,6 +52,7 @@ def test_tlearner_train_forest():
 
     tlearner.fit(x, y, treatment=w)
     _ = tlearner.predict(x, w)
+    _ = tlearner.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = tlearner.predict_ite(x)
     model_ate = tlearner.predict_ate(x)
 

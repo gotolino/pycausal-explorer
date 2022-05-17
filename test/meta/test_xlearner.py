@@ -41,4 +41,5 @@ def test_xlearner_train():
     xlearner = XLearner(learner=LinearRegression())
     xlearner.fit(x, y, treatment=w)
     _ = xlearner.predict(x, w)
+    _ = xlearner.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = xlearner.predict_ite(x)

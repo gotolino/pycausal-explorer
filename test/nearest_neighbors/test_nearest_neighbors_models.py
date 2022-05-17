@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
 from pycausal_explorer.nearest_neighbors import CausalKNNClassifier, CausalKNNRegressor
@@ -47,6 +48,7 @@ def test_causal_knn_classifier_train():
 
     causal_knn_classifier.fit(x, y, treatment=w)
     _ = causal_knn_classifier.predict(x, w)
+    _ = causal_knn_classifier.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = causal_knn_classifier.predict_proba(x, w)
     _ = causal_knn_classifier.predict_ite(x)
     _ = causal_knn_classifier.predict_ate(x)
@@ -59,6 +61,7 @@ def test_causal_knn_regressor_train():
 
     causal_knn_regressor.fit(x, y, treatment=w)
     _ = causal_knn_regressor.predict(x, w)
+    _ = causal_knn_regressor.predict(np.concatenate((x, w.reshape((-1, 1))), axis=1))
     _ = causal_knn_regressor.predict_ite(x)
     model_ate = causal_knn_regressor.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.02)
