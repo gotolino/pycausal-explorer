@@ -84,5 +84,6 @@ class DRLearner(BaseCausalModel):
         return self
 
     def predict_ite(self, X):
+        check_is_fitted(self)
         predictions = (self.tau[0].predict_proba(X) + self.tau[1].predict_proba(X)) / 2
         return predictions
