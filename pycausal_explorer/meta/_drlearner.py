@@ -1,6 +1,4 @@
-import numpy as np
 from sklearn.base import clone
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.utils.validation import check_is_fitted, check_X_y
 
@@ -44,7 +42,7 @@ class DRLearner(BaseCausalModel):
         X, y = check_X_y(X, y)
         X, w = check_X_y(X, treatment)
         X1_split, X2_split, y1_split, y2_split, w1_split, w2_split = train_test_split(
-            X, y, w, test_size=0.5, random_state=42
+            X, y, w, test_size=0.5, random_state=self.random_state
         )
         X_train = [X1_split, X2_split]
         y_train = [y1_split, y2_split]
@@ -54,28 +52,34 @@ class DRLearner(BaseCausalModel):
             X1, y1, w1 = X_train[i], y_train[i], w_train[i]
             X2, y2, w2 = X_train[1 - i], y_train[1 - i], w_train[1 - i]
 
-            self.g[i].fit(X1, w1)
+            self.propensity_score[i].fit(X1, w1)
 
-            X1_treat = X1[w == 1].copy()
-            X1_control = X1[w == 0].copy()
+            X1_treat = X1[w1 == 1].copy()
+            X1_control = X1[w1 == 0].copy()
+            X2 = X2.copy()
 
-            y1_1 = y1[w == 1].copy()
-            y1_0 = y1[w == 0].copy()
+            y1_1 = y1[w1 == 1].copy()
+            y1_0 = y1[w1 == 0].copy()
 
             self.u0[i] = self.u0[i].fit(X1_control, y1_0)
             self.u1[i] = self.u1[i].fit(X1_treat, y1_1)
 
-            uw = np.empty(shape=[X2.shape[0], 1])
-            if 1 in w:
-                uw[w == 1] = self.u1[i].predict(X1[w == 1]).reshape(-1, 1)
-            if 0 in w:
-                uw[w == 0] = self.u0[i].predict(X1[w == 0]).reshape(-1, 1)
-
-            g_proba = self.g[i].predict_proba(X2)[:, 1]
+            propensity_score_proba = self.propensity_score[i].predict_proba(X2)[:, 1]
+            # uw = np.empty(shape=[X2.shape[0], 1])
+            # if 1 in w2:
+            #     uw[w2 == 1] = self.u1[i].predict(X2[w2 == 1]).reshape(-1, 1)
+            # if 0 in w2:
+            #     uw[w2 == 0] = self.u0[i].predict(X2[w2 == 0]).reshape(-1, 1)
+            # pseudo_outcomes = (
+            #     (w2 - propensity_score_proba) / ((propensity_score_proba) * (1 - propensity_score_proba)) * (y2 - uw)
+            #     + self.u1[i].predict(X2)
+            #     - self.u0[i].predict(X2)
+            # )
             pseudo_outcomes = (
-                (w2 - g_proba) / ((g_proba) * (1 - g_proba)) * (y2 - uw)
-                + self.u1[i].predict(X2)
-                - self.u0[i].predict(X2)
+                (w2 / propensity_score_proba - (1 - w2) / (1 - propensity_score_proba))
+                * y2
+                + (1 - w2 / propensity_score_proba) * self.u1[i].predict(X2)
+                - (1 - (1 - w2) / (1 - propensity_score_proba)) * self.u0[i].predict(X2)
             )
 
             self.tau[i] = self.tau[i].fit(X2, pseudo_outcomes)
@@ -85,5 +89,5 @@ class DRLearner(BaseCausalModel):
 
     def predict_ite(self, X):
         check_is_fitted(self)
-        predictions = (self.tau[0].predict_proba(X) + self.tau[1].predict_proba(X)) / 2
+        predictions = (self.tau[0].predict(X) + self.tau[1].predict(X)) / 2
         return predictions

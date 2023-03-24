@@ -1,4 +1,5 @@
-from ._single_learner import SingleLearnerRegressor, SingleLearnerClassifier
-from ._tlearner import TLearnerRegressor, TLearnerLogistic
+from ._doubleML import DoubleMLBinaryTreatment, DoubleMLLinear
+from ._drlearner import DRLearner
+from ._single_learner import SingleLearnerClassifier, SingleLearnerRegressor
+from ._tlearner import TLearnerLogistic, TLearnerRegressor
 from ._xlearner import XLearner
-from ._doubleML import DoubleMLLinear, DoubleMLBinaryTreatment

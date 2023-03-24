@@ -42,3 +42,5 @@ def test_xlearner_train():
     xlearner.fit(x, y, treatment=w)
     _ = xlearner.predict(x, w)
     _ = xlearner.predict_ite(x)
+    model_ate = xlearner.predict_ate(x)
+    assert 1.0 == pytest.approx(model_ate, 0.0001)
