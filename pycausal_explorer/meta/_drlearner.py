@@ -70,17 +70,19 @@ class DRLearner(BaseCausalModel):
             #     uw[w2 == 1] = self.u1[i].predict(X2[w2 == 1]).reshape(-1, 1)
             # if 0 in w2:
             #     uw[w2 == 0] = self.u0[i].predict(X2[w2 == 0]).reshape(-1, 1)
-            # pseudo_outcomes = (
-            #     (w2 - propensity_score_proba) / ((propensity_score_proba) * (1 - propensity_score_proba)) * (y2 - uw)
-            #     + self.u1[i].predict(X2)
-            #     - self.u0[i].predict(X2)
-            # )
             pseudo_outcomes = (
-                (w2 / propensity_score_proba - (1 - w2) / (1 - propensity_score_proba))
-                * y2
-                + (1 - w2 / propensity_score_proba) * self.u1[i].predict(X2)
-                - (1 - (1 - w2) / (1 - propensity_score_proba)) * self.u0[i].predict(X2)
+                (w2 - propensity_score_proba)
+                / ((propensity_score_proba) * (1 - propensity_score_proba))
+                * (y2 - self.u1[i].predict(X2) * w2 - self.u0[i].predict(X2) * (1 - w2))
+                + self.u1[i].predict(X2)
+                - self.u0[i].predict(X2)
             )
+            # pseudo_outcomes = (
+            #     (w2 / propensity_score_proba - (1 - w2) / (1 - propensity_score_proba))
+            #     * y2
+            #     + (1 - w2 / propensity_score_proba) * self.u1[i].predict(X2)
+            #     - (1 - (1 - w2) / (1 - propensity_score_proba)) * self.u0[i].predict(X2)
+            # )
 
             self.tau[i] = self.tau[i].fit(X2, pseudo_outcomes)
 
