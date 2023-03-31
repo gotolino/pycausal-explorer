@@ -20,7 +20,6 @@ class BaseCausalForest(BaseCausalModel):
         random_search_params=None,
         model_search_params=None,
     ):
-
         if (
             type(forest_algorithm) is not str
             or forest_algorithm not in supported_forest_algorithms
