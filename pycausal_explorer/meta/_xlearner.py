@@ -1,4 +1,3 @@
-import numpy as np
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.utils.validation import check_is_fitted, check_X_y
