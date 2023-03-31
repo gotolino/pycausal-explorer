@@ -1,3 +1,4 @@
+import numpy as np
 from sklearn.base import clone
 from sklearn.model_selection import train_test_split
 from sklearn.utils.validation import check_is_fitted, check_X_y
@@ -64,12 +65,10 @@ class DRLearner(BaseCausalModel):
             self.u0[i] = self.u0[i].fit(X1_control, y1_0)
             self.u1[i] = self.u1[i].fit(X1_treat, y1_1)
 
-            propensity_score_proba = self.propensity_score[i].predict_proba(X2)[:, 1]
-            # uw = np.empty(shape=[X2.shape[0], 1])
-            # if 1 in w2:
-            #     uw[w2 == 1] = self.u1[i].predict(X2[w2 == 1]).reshape(-1, 1)
-            # if 0 in w2:
-            #     uw[w2 == 0] = self.u0[i].predict(X2[w2 == 0]).reshape(-1, 1)
+            propensity_score_proba = np.maximum(
+                self.propensity_score[i].predict_proba(X2)[:, 1], 0.001
+            )
+            propensity_score_proba = np.minimum(propensity_score_proba, 0.999)
             pseudo_outcomes = (
                 (w2 - propensity_score_proba)
                 / ((propensity_score_proba) * (1 - propensity_score_proba))
@@ -77,12 +76,6 @@ class DRLearner(BaseCausalModel):
                 + self.u1[i].predict(X2)
                 - self.u0[i].predict(X2)
             )
-            # pseudo_outcomes = (
-            #     (w2 / propensity_score_proba - (1 - w2) / (1 - propensity_score_proba))
-            #     * y2
-            #     + (1 - w2 / propensity_score_proba) * self.u1[i].predict(X2)
-            #     - (1 - (1 - w2) / (1 - propensity_score_proba)) * self.u0[i].predict(X2)
-            # )
 
             self.tau[i] = self.tau[i].fit(X2, pseudo_outcomes)
 
