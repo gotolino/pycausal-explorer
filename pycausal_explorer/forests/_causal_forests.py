@@ -5,8 +5,7 @@ from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.utils.validation import check_is_fitted, check_X_y
 
 from pycausal_explorer.base import BaseCausalModel
-
-from ._constants import (
+from pycausal_explorer.forests._constants import (
     forest_classifier_algorithms_dict,
     forest_regressor_algorithms_dict,
     supported_forest_algorithms,
@@ -21,7 +20,6 @@ class BaseCausalForest(BaseCausalModel):
         random_search_params=None,
         model_search_params=None,
     ):
-
         if (
             type(forest_algorithm) is not str
             or forest_algorithm not in supported_forest_algorithms
