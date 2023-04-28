@@ -10,7 +10,7 @@ from ..reweight import PropensityScore
 
 class DRLearner(BaseCausalModel):
     """
-    Implementation of the Doubly Roobust Learner.
+    Implementation of the Doubly Robust Learner.
 
     It consists of estimating heterogeneous treatment effect doubly robust.
     Details of DR-learner theory are available at Edward H. Kennedy (2020) (https://arxiv.org/abs/2004.14497).

@@ -8,7 +8,7 @@ from pycausal_explorer.datasets.synthetic import create_synthetic_data
 from pycausal_explorer.meta import DRLearner
 
 
-def test_xlearner_init_learner():
+def test_drlearner_init_learner():
     learner = LinearRegression()
     drlearner = DRLearner(LinearRegression())
     assert type(drlearner.u0[0]) is type(learner)
@@ -20,7 +20,7 @@ def test_xlearner_init_learner():
     assert type(drlearner.tau[1]) is type(learner)
 
 
-def test_xlearner_init_custom_learner():
+def test_drlearner_init_custom_learner():
     drlearner = DRLearner(
         learner=None,
         u0=LinearRegression(),
@@ -36,12 +36,12 @@ def test_xlearner_init_custom_learner():
     assert isinstance(drlearner.tau[1], RandomForestRegressor)
 
 
-def test_xlearner_init_raise_exception():
+def test_drlearner_init_raise_exception():
     with pytest.raises(ValueError):
         DRLearner(u0=LinearRegression(), u1=LinearRegression())
 
 
-def test_xlearner_train():
+def test_drlearner_train():
     x, w, y = create_synthetic_data(random_seed=42)
     drlearner = DRLearner(learner=LinearRegression())
     drlearner.fit(x, y, treatment=w)
