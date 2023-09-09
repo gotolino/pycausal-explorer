@@ -22,7 +22,6 @@ class PSM(BaseCausalModel):
         self.propensity_score = propensity_score
         self.matching_model = matching_model
 
-
     def fit(self, X, y, *, treatment):
         X, y = check_X_y(X, y)
         X, w = check_X_y(X, treatment)

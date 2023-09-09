@@ -83,10 +83,11 @@ class CausalKNNBaseModel(BaseCausalModel):
 
 
 class CausalKNNRegressor(CausalKNNBaseModel):
-    def __init__(self,
-                 params={"n_neighbors": 10, "metric": "euclidean"},
-                 scale=True,
-                 ):
+    def __init__(
+        self,
+        params={"n_neighbors": 10, "metric": "euclidean"},
+        scale=True,
+    ):
         super().__init__(params, scale)
         self._estimator_type = "regressor"
         self.knn_control_model = KNeighborsRegressor(**self.params)
