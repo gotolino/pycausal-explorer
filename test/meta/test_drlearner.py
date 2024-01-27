@@ -11,13 +11,13 @@ from pycausal_explorer.meta import DRLearner
 def test_drlearner_init_learner():
     learner = LinearRegression()
     drlearner = DRLearner(LinearRegression())
-    assert type(drlearner.u0[0]) is type(learner)
-    assert type(drlearner.u1[0]) is type(learner)
-    assert type(drlearner.tau[0]) is type(learner)
+    assert type(drlearner.u0) is type(learner)
+    assert type(drlearner.u1) is type(learner)
+    assert type(drlearner.tau) is type(learner)
 
-    assert type(drlearner.u0[1]) is type(learner)
-    assert type(drlearner.u1[1]) is type(learner)
-    assert type(drlearner.tau[1]) is type(learner)
+    assert type(drlearner.u0) is type(learner)
+    assert type(drlearner.u1) is type(learner)
+    assert type(drlearner.tau) is type(learner)
 
 
 def test_drlearner_init_custom_learner():
@@ -27,13 +27,13 @@ def test_drlearner_init_custom_learner():
         u1=LinearRegression(),
         tau=RandomForestRegressor(n_estimators=100),
     )
-    assert isinstance(drlearner.u0[0], LinearRegression)
-    assert isinstance(drlearner.u1[0], LinearRegression)
-    assert isinstance(drlearner.tau[0], RandomForestRegressor)
+    assert isinstance(drlearner.u0, LinearRegression)
+    assert isinstance(drlearner.u1, LinearRegression)
+    assert isinstance(drlearner.tau, RandomForestRegressor)
 
-    assert isinstance(drlearner.u0[1], LinearRegression)
-    assert isinstance(drlearner.u1[1], LinearRegression)
-    assert isinstance(drlearner.tau[1], RandomForestRegressor)
+    assert isinstance(drlearner.u0, LinearRegression)
+    assert isinstance(drlearner.u1, LinearRegression)
+    assert isinstance(drlearner.tau, RandomForestRegressor)
 
 
 def test_drlearner_init_raise_exception():
