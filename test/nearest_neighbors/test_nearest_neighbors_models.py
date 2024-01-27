@@ -75,4 +75,4 @@ def test_causal_knn_index_error():
     causal_knn_classifier = CausalKNNClassifier(params={"n_neighbors": 20})
     causal_knn_classifier.fit(x, y, treatment=w)
     with pytest.raises(IndexError):
-        _ = causal_knn_classifier.predict_ite(x, w)
+        _ = causal_knn_classifier.predict_ite(x)
