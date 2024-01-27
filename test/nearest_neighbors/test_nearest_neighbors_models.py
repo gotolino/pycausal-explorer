@@ -69,6 +69,7 @@ def test_causal_knn_regressor_train():
     model_ate = causal_knn_regressor.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.02)
 
+
 def test_causal_knn_index_error():
     x, w, y = create_synthetic_data(random_seed=42)
     y = np.where(y == 0, 1, 1)
