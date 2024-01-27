@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 
 from pycausal_explorer.datasets.synthetic import create_synthetic_data
@@ -40,6 +41,11 @@ def test_causal_knn_regressor_init_raise_exception():
         CausalKNNRegressor(params=20)
 
 
+def test_causal_knn_regressor_init_raise_scale_exception():
+    with pytest.raises(ValueError):
+        CausalKNNRegressor(scale="error")
+
+
 def test_causal_knn_classifier_train():
     x, w, y = create_synthetic_data(random_seed=42, target_type="binary")
 
@@ -62,3 +68,12 @@ def test_causal_knn_regressor_train():
     _ = causal_knn_regressor.predict_ite(x)
     model_ate = causal_knn_regressor.predict_ate(x)
     assert 1.0 == pytest.approx(model_ate, 0.02)
+
+
+def test_causal_knn_index_error():
+    x, w, y = create_synthetic_data(random_seed=42)
+    y = np.where(y == 0, 1, 1)
+    causal_knn_classifier = CausalKNNClassifier(params={"n_neighbors": 20})
+    causal_knn_classifier.fit(x, y, treatment=w)
+    with pytest.raises(IndexError):
+        _ = causal_knn_classifier.predict_ite(x)

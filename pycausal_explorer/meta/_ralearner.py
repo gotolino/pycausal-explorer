@@ -1,19 +1,15 @@
-import numpy as np
 from sklearn.base import clone
-from sklearn.model_selection import train_test_split
 from sklearn.utils.validation import check_is_fitted, check_X_y
 
 from pycausal_explorer.base import BaseCausalModel
 
-from ..reweight import PropensityScore
 
-
-class DRLearner(BaseCausalModel):
+class RALearner(BaseCausalModel):
     """
-    Implementation of the Doubly Robust Learner.
+    Implementation of the Regression Adjustment Learner.
 
     It consists of estimating heterogeneous treatment effect doubly robust.
-    Details of DR-learner theory are available at Edward H. Kennedy (2020) (https://arxiv.org/abs/2004.14497).
+    Details of RA-learner theory are available at Edward H. Kennedy (2020) (https://arxiv.org/abs/2004.14497).
 
     Parameters
     ----------
@@ -36,37 +32,24 @@ class DRLearner(BaseCausalModel):
             self.tau = clone(tau)
         else:
             raise ValueError("Either learner or (u0, u1, tau) must be passed")
-        self.propensity_score = PropensityScore()
         self.random_state = random_state
 
     def fit(self, X, y, *, treatment):
         X, y = check_X_y(X, y)
         X, w = check_X_y(X, treatment)
 
-        self.propensity_score.fit(X, w)
-
         X_treat = X[w == 1].copy()
         X_control = X[w == 0].copy()
 
-        y_treat = y[w == 1].copy()
-        y_control = y[w == 0].copy()
+        y1 = y[w == 1].copy()
+        y0 = y[w == 0].copy()
 
-        self.u0 = self.u0.fit(X_control, y_control)
-        self.u1 = self.u1.fit(X_treat, y_treat)
+        self.u0 = self.u0.fit(X_control, y0)
+        self.u1 = self.u1.fit(X_treat, y1)
 
-        propensity_score_proba = np.maximum(
-            self.propensity_score.predict_proba(X)[:, 1], 0.001
-        )
-        propensity_score_proba = np.minimum(propensity_score_proba, 0.999)
-        pseudo_outcomes = (
-            (w - propensity_score_proba)
-            / ((propensity_score_proba) * (1 - propensity_score_proba))
-            * (y - self.u1.predict(X) * w - self.u0.predict(X) * (1 - w))
-            + self.u1.predict(X)
-            - self.u0.predict(X)
-        )
+        y_pseudo = w * (y - self.u0.predict(X)) + (1 - w) * (self.u1.predict(X) - y)
 
-        self.tau = self.tau.fit(X, pseudo_outcomes)
+        self.tau.fit(X, y_pseudo)
 
         self.is_fitted_ = True
         return self
