@@ -9,12 +9,19 @@ authors:
   - name: Guilherme Goto Escudero
     orcid: 0009-0000-2451-7029
     equal-contrib: true
+    corresponding: true
     affiliation: 1
+  - name: Heitor Santos
+    affiliation: 2
+  - name: João Almeida
+    affiliation: 2
   - name: Roseli de Deus Lopes
     affiliation: 1
 affiliations:
  - name: Escola Politécnica - Universidade de São Paulo, Brazil
    index: 1
+ - name: Independent Researcher, Brazil
+   index: 2
 date: 26 January 2024
 bibliography: paper.bib
 
