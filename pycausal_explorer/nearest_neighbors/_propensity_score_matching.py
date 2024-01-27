@@ -14,11 +14,6 @@ class PSM(BaseCausalModel):
         propensity_score=PropensityScore(),
         matching_model=CausalKNNRegressor(),
     ):
-        # if type(params) is not dict:
-        #     raise ValueError("KNN params must be a dictionary")
-        # if type(scale) is not bool:
-        #     raise ValueError("Scale flag must be a Boolean value")
-
         self.propensity_score = propensity_score
         self.matching_model = matching_model
 
