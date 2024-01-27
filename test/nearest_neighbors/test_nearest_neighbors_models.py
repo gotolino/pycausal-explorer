@@ -39,6 +39,10 @@ def test_causal_knn_regressor_init_raise_exception():
     with pytest.raises(ValueError):
         CausalKNNRegressor(params=20)
 
+def test_causal_knn_regressor_init_raise_scale_exception():
+    with pytest.raises(ValueError):
+        CausalKNNRegressor(scale="error")
+
 
 def test_causal_knn_classifier_train():
     x, w, y = create_synthetic_data(random_seed=42, target_type="binary")
