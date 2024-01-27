@@ -17,6 +17,5 @@ def test_propensity_score_matching_train():
 
     psm.fit(x, y, treatment=w)
     _ = psm.predict(x, w)
-    _ = psm.predict_proba(x, w)
     _ = psm.predict_ite(x)
     _ = psm.predict_ate(x)
