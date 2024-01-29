@@ -11,9 +11,9 @@ authors:
     equal-contrib: true
     corresponding: true
     affiliation: 1
-  - name: Heitor Santos
+  - name: Heitor de Moraes Santos
     affiliation: 2
-  - name: João Almeida
+  - name: João Vitor Tigre Almeida
     affiliation: 2
   - name: Roseli de Deus Lopes
     affiliation: 1
