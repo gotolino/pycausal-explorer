@@ -94,6 +94,4 @@ analysis tool, abstracting most of the data process work. This last library focu
 identification of causal effect (i.e., inspecting causal models’ assumptions) and allows 
 for integration with algorithms implemented by both CausalML and EconML.
 
-# Acknowledgements
-
-We acknowledge contributions from Heitor Santos and João Almeida.
+# References
